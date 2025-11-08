@@ -1,22 +1,61 @@
-import './Main.css'
+import { useState, useEffect } from 'react'
 import Column from '../Column/Column'
+import { statuses } from '../../data'
 
 function Main() {
-  const columns = [
-    { title: 'Без статуса', color: '' },
-    { title: 'Нужно сделать', color: '' },
-    { title: 'В работе', color: '' },
-    { title: 'Тестирование', color: '' },
-    { title: 'Готово', color: '' }
-  ]
+  const [cards, setCards] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Имитация загрузки данных
+  useEffect(() => {
+    const loadCards = async () => {
+      try {
+        // Имитируем загрузку данных с сервера
+        await new Promise(resolve => setTimeout(resolve, 2000))
+        
+        // Импортируем данные
+        const { cardsData } = await import('../../data')
+        setCards(cardsData)
+      } catch (error) {
+        console.error('Ошибка загрузки данных:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadCards()
+  }, [])
+
+  // Функция для получения карточек по статусу
+  const getCardsByStatus = (status) => {
+    return cards.filter(card => card.status === status)
+  }
+
+  if (isLoading) {
+    return (
+      <main className="main">
+        <div className="container">
+          <div className="main__block">
+            <div className="loading">
+              <p>Данные загружаются...</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    )
+  }
 
   return (
     <main className="main">
       <div className="container">
         <div className="main__block">
           <div className="main__content">
-            {columns.map((column, index) => (
-              <Column key={index} title={column.title} />
+            {statuses.map((status, index) => (
+              <Column 
+                key={index} 
+                title={status}
+                cards={getCardsByStatus(status)}
+              />
             ))}
           </div>
         </div>
