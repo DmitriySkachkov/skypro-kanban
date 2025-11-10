@@ -1072,3 +1072,23 @@ body {
     display: block;
   }
 }
+
+/* Стили для загрузки */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  width: 100%;
+}
+
+.loading p {
+  font-size: 18px;
+  color: #94A6BE;
+  font-weight: 500;
+}
+
+/* Стили для активного меню пользователя */
+.header__pop-user-set.active {
+  display: block !important;
+}

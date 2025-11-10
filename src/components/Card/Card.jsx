@@ -1,12 +1,26 @@
-import './Card.css'
+function Card({ title, topic, date }) {
+  // Функция для определения класса темы по названию темы
+  const getThemeClass = (topic) => {
+    switch (topic) {
+      case 'Web Design':
+        return 'orange'
+      case 'Research':
+        return 'green'
+      case 'Copywriting':
+        return 'purple'
+      default:
+        return 'orange'
+    }
+  }
 
-function Card({ title, theme, category, date }) {
+  const theme = getThemeClass(topic)
+
   return (
     <div className="cards__item">
       <div className="cards__card card">
         <div className="card__group">
           <div className={`card__theme _${theme}`}>
-            <p className={`_${theme}`}>{category}</p>
+            <p className={`_${theme}`}>{topic}</p>
           </div>
           <a href="#popBrowse" target="_self">
             <div className="card__btn">
@@ -17,7 +31,7 @@ function Card({ title, theme, category, date }) {
           </a>
         </div>
         <div className="card__content">
-          <a href="" target="_blank">
+          <a href="#" target="_blank">
             <h3 className="card__title">{title}</h3>
           </a>
           <div className="card__date">
