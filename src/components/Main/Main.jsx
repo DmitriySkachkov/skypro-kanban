@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Column from '../Column/Column'
+import Loading from '../Loading/Loading'
 import { statuses } from '../../data'
 
 function Main() {
@@ -31,33 +32,23 @@ function Main() {
     return cards.filter(card => card.status === status)
   }
 
-  if (isLoading) {
-    return (
-      <main className="main">
-        <div className="container">
-          <div className="main__block">
-            <div className="loading">
-              <p>Данные загружаются...</p>
-            </div>
-          </div>
-        </div>
-      </main>
-    )
-  }
-
   return (
     <main className="main">
       <div className="container">
         <div className="main__block">
-          <div className="main__content">
-            {statuses.map((status, index) => (
-              <Column 
-                key={index} 
-                title={status}
-                cards={getCardsByStatus(status)}
-              />
-            ))}
-          </div>
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <div className="main__content">
+              {statuses.map((status, index) => (
+                <Column 
+                  key={index} 
+                  title={status}
+                  cards={getCardsByStatus(status)}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </main>
