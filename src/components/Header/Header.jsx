@@ -1,37 +1,46 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import {
+  StyledHeader,
+  HeaderBlock,
+  HeaderLogo,
+  HeaderNav,
+  HeaderButton,
+  HeaderUser,
+  PopUserSet
+} from './Header.styled';
 
 function Header() {
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const toggleUserMenu = () => {
-    setIsUserMenuOpen(!isUserMenuOpen)
-  }
+    setIsUserMenuOpen(!isUserMenuOpen);
+  };
 
   return (
-    <header className="header">
+    <StyledHeader>
       <div className="container">
-        <div className="header__block">
-          <div className="header__logo _show _light">
+        <HeaderBlock>
+          <HeaderLogo className="_show _light">
             <a href="#" target="_self"><img src="/public/logo.png" alt="logo" /></a>
-          </div>
-          <div className="header__logo _dark">
+          </HeaderLogo>
+          <HeaderLogo className="_dark">
             <a href="#" target="_self"><img src="/public/logo_dark.png" alt="logo" /></a>
-          </div>
-          <nav className="header__nav">
-            <button className="header__btn-main-new _hover01" id="btnMainNew">
+          </HeaderLogo>
+          <HeaderNav>
+            <HeaderButton className="_hover01" id="btnMainNew">
               <a href="#popNewCard">Создать новую задачу</a>
-            </button>
-            <a 
-              href="#user-set-target" 
-              className="header__user _hover02"
+            </HeaderButton>
+            <HeaderUser 
+              href="#user-set-target"
+              className="_hover02"
               onClick={toggleUserMenu}
             >
               Ivan Ivanov
-            </a>
-            <div 
-              className={`header__pop-user-set pop-user-set ${isUserMenuOpen ? 'active' : ''}`}
+            </HeaderUser>
+            <PopUserSet 
+              className="pop-user-set"
               id="user-set-target"
-              style={{ display: isUserMenuOpen ? 'block' : 'none' }}
+              isOpen={isUserMenuOpen}
             >
               <p className="pop-user-set__name">Ivan Ivanov</p>
               <p className="pop-user-set__mail">ivan.ivanov@gmail.com</p>
@@ -42,12 +51,12 @@ function Header() {
               <button type="button" className="_hover03">
                 <a href="#popExit">Выйти</a>
               </button>
-            </div>
-          </nav>					
-        </div>
+            </PopUserSet>
+          </HeaderNav>					
+        </HeaderBlock>
       </div>			
-    </header>
-  )
+    </StyledHeader>
+  );
 }
 
-export default Header
+export default Header;

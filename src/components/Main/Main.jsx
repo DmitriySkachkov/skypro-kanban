@@ -1,45 +1,41 @@
-import { useState, useEffect } from 'react'
-import Column from '../Column/Column'
-import Loading from '../Loading/Loading'
-import { statuses } from '../../data'
+import { useState, useEffect } from 'react';
+import Column from '../Column/Column';
+import Loading from '../Loading/Loading';
+import { statuses } from '../../data';
+import { StyledMain, MainBlock, MainContent } from './Main.styled';
 
 function Main() {
-  const [cards, setCards] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [cards, setCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Имитация загрузки данных
   useEffect(() => {
     const loadCards = async () => {
       try {
-        // Имитируем загрузку данных с сервера
-        await new Promise(resolve => setTimeout(resolve, 2000))
-        
-        // Импортируем данные
-        const { cardsData } = await import('../../data')
-        setCards(cardsData)
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        const { cardsData } = await import('../../data');
+        setCards(cardsData);
       } catch (error) {
-        console.error('Ошибка загрузки данных:', error)
+        console.error('Ошибка загрузки данных:', error);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
+    };
 
-    loadCards()
-  }, [])
+    loadCards();
+  }, []);
 
-  // Функция для получения карточек по статусу
   const getCardsByStatus = (status) => {
-    return cards.filter(card => card.status === status)
-  }
+    return cards.filter(card => card.status === status);
+  };
 
   return (
-    <main className="main">
+    <StyledMain>
       <div className="container">
-        <div className="main__block">
+        <MainBlock>
           {isLoading ? (
             <Loading />
           ) : (
-            <div className="main__content">
+            <MainContent>
               {statuses.map((status, index) => (
                 <Column 
                   key={index} 
@@ -47,12 +43,12 @@ function Main() {
                   cards={getCardsByStatus(status)}
                 />
               ))}
-            </div>
+            </MainContent>
           )}
-        </div>
+        </MainBlock>
       </div>
-    </main>
-  )
+    </StyledMain>
+  );
 }
 
-export default Main
+export default Main;
