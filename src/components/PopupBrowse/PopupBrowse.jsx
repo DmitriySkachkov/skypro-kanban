@@ -1,62 +1,157 @@
+import {
+  PopupBrowseOverlay,
+  PopupBrowseBlock,
+  PopupBrowseContent,
+  PopupBrowseTopBlock,
+  PopupBrowseTitle,
+  PopupBrowseWrap,
+  PopupBrowseForm,
+  FormBrowseBlock,
+  FormBrowseArea,
+  Subtitle,
+  Calendar,
+  CalendarTitle,
+  CalendarText,
+  CalendarBlock,
+  CalendarMonth,
+  CalendarContent,
+  CalendarDaysNames,
+  CalendarDayName,
+  CalendarCells,
+  CalendarCell,
+  CalendarNav,
+  CalendarPeriod,
+  NavActions,
+  NavAction,
+  Categories,
+  CategoriesText,
+  CategoriesThemes,
+  CategoriesTheme,
+  Status,
+  StatusText,
+  StatusThemes,
+  StatusTheme,
+  PopupBrowseButtons
+} from './PopupBrowse.styled';
+
 function PopupBrowse() {
   return (
-    <div className="pop-browse" id="popBrowse">
-      <div className="pop-browse__container">
-        <div className="pop-browse__block">
-          <div className="pop-browse__content">
-            <div className="pop-browse__top-block">
-              <h3 className="pop-browse__ttl">Название задачи</h3>
-              <div className="categories__theme theme-top _orange _active-category">
-                <p className="_orange">Web Design</p>
-              </div>
-            </div>
-            <div className="pop-browse__wrap">
-              <form className="pop-browse__form form-browse" id="formBrowseCard" action="#">									
-                <div className="form-browse__block">
-                  <label htmlFor="textArea01" className="subttl">Описание задачи</label>
-                  <textarea className="form-browse__area" name="text" id="textArea01" readOnly placeholder="Введите описание задачи..."></textarea>
-                </div>
-              </form>
-              <div className="pop-new-card__calendar calendar">
-                <div className="calendar__ttl subttl">Даты</div>
-                <div className="calendar__block">
-                  <div className="calendar__nav">
-                    <div className="calendar__period">
-                      <p className="calendar__p date-end">Срок исполнения: <span className="date-control">09.09.23</span></p>
-                    </div>
-                    <div className="nav__actions">
-                      <button className="nav__action" data-action="prev">‹</button>
-                      <div className="calendar__month">Сентябрь 2023</div>
-                      <button className="nav__action" data-action="next">›</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="theme-down__categories theme-down">
-              <p className="categories__p subttl">Категория</p>
-              <div className="categories__theme _orange _active-category">
-                <p className="_orange">Web Design</p>
-              </div>
-            </div>
-            <div className="pop-browse__btn-browse">
-              <div className="btn-group">
-                <button className="btn-browse__edit _btn-bor _hover03">
-                  <a href="#">Редактировать задачу</a>
-                </button>
-                <button className="btn-browse__delete _btn-bor _hover03">
-                  <a href="#">Удалить задачу</a>
-                </button>
-              </div>
-              <button className="btn-browse__close _btn-bg _hover01">
-                <a href="#">Закрыть</a>
+    <PopupBrowseOverlay className="pop-browse" id="popBrowse" $isOpen={false}>
+      <PopupBrowseBlock>
+        <PopupBrowseContent>
+          <PopupBrowseTopBlock>
+            <PopupBrowseTitle>Название задачи</PopupBrowseTitle>
+            <CategoriesTheme className="theme-top" $color="orange" $active>
+              <p>Web Design</p>
+            </CategoriesTheme>
+          </PopupBrowseTopBlock>
+          
+          <Status>
+            <StatusText>
+              <Subtitle>Статус</Subtitle>
+            </StatusText>
+            <StatusThemes>
+              <StatusTheme $hide>
+                <p>Без статуса</p>
+              </StatusTheme>
+              <StatusTheme $gray>
+                <p>Нужно сделать</p>
+              </StatusTheme>
+              <StatusTheme $hide>
+                <p>В работе</p>
+              </StatusTheme>
+              <StatusTheme $hide>
+                <p>Тестирование</p>
+              </StatusTheme>
+              <StatusTheme $hide>
+                <p>Готово</p>
+              </StatusTheme>
+            </StatusThemes>
+          </Status>
+          
+          <PopupBrowseWrap>
+            <PopupBrowseForm id="formBrowseCard" action="#">
+              <FormBrowseBlock>
+                <Subtitle>Описание задачи</Subtitle>
+                <FormBrowseArea 
+                  name="text" 
+                  id="textArea01" 
+                  readOnly 
+                  placeholder="Введите описание задачи..."
+                />
+              </FormBrowseBlock>
+            </PopupBrowseForm>
+            
+            <Calendar>
+              <CalendarTitle>
+                <Subtitle>Даты</Subtitle>
+              </CalendarTitle>
+              <CalendarBlock>
+                <CalendarNav>
+                  <CalendarPeriod>
+                    <CalendarText>
+                      Срок исполнения: <span className="date-control">09.09.23</span>
+                    </CalendarText>
+                  </CalendarPeriod>
+                  <NavActions>
+                    <NavAction data-action="prev">‹</NavAction>
+                    <CalendarMonth>Сентябрь 2023</CalendarMonth>
+                    <NavAction data-action="next">›</NavAction>
+                  </NavActions>
+                </CalendarNav>
+                <CalendarContent>
+                  <CalendarDaysNames>
+                    <CalendarDayName>пн</CalendarDayName>
+                    <CalendarDayName>вт</CalendarDayName>
+                    <CalendarDayName>ср</CalendarDayName>
+                    <CalendarDayName>чт</CalendarDayName>
+                    <CalendarDayName>пт</CalendarDayName>
+                    <CalendarDayName>сб</CalendarDayName>
+                    <CalendarDayName>вс</CalendarDayName>
+                  </CalendarDaysNames>
+                  <CalendarCells>
+                    {/* Пример календарных ячеек */}
+                    <CalendarCell $otherMonth>28</CalendarCell>
+                    <CalendarCell $otherMonth>29</CalendarCell>
+                    <CalendarCell $otherMonth>30</CalendarCell>
+                    <CalendarCell $isDay>1</CalendarCell>
+                    <CalendarCell $isDay $current>2</CalendarCell>
+                    <CalendarCell $isDay $active>3</CalendarCell>
+                    {/* ... остальные дни */}
+                  </CalendarCells>
+                </CalendarContent>
+              </CalendarBlock>
+            </Calendar>
+          </PopupBrowseWrap>
+          
+          <Categories className="theme-down">
+            <CategoriesText>
+              <Subtitle>Категория</Subtitle>
+            </CategoriesText>
+            <CategoriesThemes>
+              <CategoriesTheme $color="orange" $active>
+                <p>Web Design</p>
+              </CategoriesTheme>
+            </CategoriesThemes>
+          </Categories>
+          
+          <PopupBrowseButtons className="pop-browse__btn-browse">
+            <div className="btn-group">
+              <button className="_btn-bor _hover03">
+                <a href="#">Редактировать задачу</a>
+              </button>
+              <button className="_btn-bor _hover03">
+                <a href="#">Удалить задачу</a>
               </button>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+            <button className="_btn-bg _hover01">
+              <a href="#">Закрыть</a>
+            </button>
+          </PopupBrowseButtons>
+        </PopupBrowseContent>
+      </PopupBrowseBlock>
+    </PopupBrowseOverlay>
+  );
 }
 
-export default PopupBrowse
+export default PopupBrowse;

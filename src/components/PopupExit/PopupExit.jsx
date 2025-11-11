@@ -1,25 +1,30 @@
+import { 
+  PopupExitOverlay, 
+  PopupExitBlock, 
+  PopupTitle, 
+  PopupForm, 
+  PopupExitFormGroup, 
+  PopupButton 
+} from './PopupExit.styled';
+
 function PopupExit() {
   return (
-    <div className="pop-exit" id="popExit">
-      <div className="pop-exit__container">
-        <div className="pop-exit__block">
-          <div className="pop-exit__ttl">
-            <h2>Выйти из аккаунта?</h2>
-          </div>
-          <form className="pop-exit__form" id="formExit" action="#">
-            <div className="pop-exit__form-group">
-              <button className="pop-exit__exit-yes _hover01" id="exitYes">
-                Да, выйти
-              </button>
-              <button className="pop-exit__exit-no _hover03" id="exitNo">
-                Нет, остаться
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  )
+    <PopupExitOverlay className="pop-exit" id="popExit" $isOpen={false}>
+      <PopupExitBlock>
+        <PopupTitle>Выйти из аккаунта?</PopupTitle>
+        <PopupForm id="formExit" action="#">
+          <PopupExitFormGroup>
+            <PopupButton $variant="primary" id="exitYes">
+              <a href="#exit">Да, выйти</a>
+            </PopupButton>
+            <PopupButton $variant="secondary" id="exitNo">
+              <a href="#stay">Нет, остаться</a>
+            </PopupButton>
+          </PopupExitFormGroup>
+        </PopupForm>
+      </PopupExitBlock>
+    </PopupExitOverlay>
+  );
 }
 
-export default PopupExit
+export default PopupExit;

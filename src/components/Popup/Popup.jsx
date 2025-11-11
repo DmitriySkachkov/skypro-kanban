@@ -1,6 +1,6 @@
-import PopupExit from '../PopupExit/PopupExit'
-import PopupNewCard from '../PopupNewCard/PopupNewCard'
-import PopupBrowse from '../PopupBrowse/PopupBrowse'
+import PopupExit from '../PopupExit/PopupExit';
+import PopupNewCard from '../PopupNewCard/PopupNewCard';
+import PopupBrowse from '../PopupBrowse/PopupBrowse';
 
 function Popup() {
   return (
@@ -9,7 +9,7 @@ function Popup() {
       <PopupNewCard />
       <PopupBrowse />
     </div>
-  )
+  );
 }
 
-export default Popup
+export default Popup;

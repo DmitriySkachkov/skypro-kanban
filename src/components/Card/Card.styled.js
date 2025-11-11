@@ -34,7 +34,7 @@ export const CardTheme = styled.div`
   padding: 5px 14px;
   border-radius: 18px;
   background-color: ${props => {
-    switch (props.theme) {
+    switch (props.$theme) {
       case 'orange': return '#FFE4C2';
       case 'green': return '#B4FDD1';
       case 'purple': return '#E9D4FF';
@@ -42,7 +42,7 @@ export const CardTheme = styled.div`
     }
   }};
   color: ${props => {
-    switch (props.theme) {
+    switch (props.$theme) {
       case 'orange': return '#FF6D00';
       case 'green': return '#06B16E';
       case 'purple': return '#9A48F1';

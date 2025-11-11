@@ -29,7 +29,7 @@ function Card({ title, topic, date }) {
     <CardItem className="cards__item">
       <CardContainer className="cards__card card">
         <CardGroup className="card__group">
-          <CardTheme theme={theme} className="card__theme">
+          <CardTheme $theme={theme} className="card__theme">
             <p>{topic}</p>
           </CardTheme>
           <a href="#popBrowse" target="_self">

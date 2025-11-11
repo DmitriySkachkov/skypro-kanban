@@ -6,7 +6,12 @@ import {
   HeaderNav,
   HeaderButton,
   HeaderUser,
-  PopUserSet
+  PopUserSet,
+  PopUserName,
+  PopUserMail,
+  PopUserTheme,
+  ThemeCheckbox,
+  PopUserButton
 } from './Header.styled';
 
 function Header() {
@@ -40,17 +45,17 @@ function Header() {
             <PopUserSet 
               className="pop-user-set"
               id="user-set-target"
-              isOpen={isUserMenuOpen}
+              $isOpen={isUserMenuOpen}
             >
-              <p className="pop-user-set__name">Ivan Ivanov</p>
-              <p className="pop-user-set__mail">ivan.ivanov@gmail.com</p>
-              <div className="pop-user-set__theme">
+              <PopUserName>Ivan Ivanov</PopUserName>
+              <PopUserMail>ivan.ivanov@gmail.com</PopUserMail>
+              <PopUserTheme>
                 <p>Темная тема</p>
-                <input type="checkbox" className="checkbox" name="checkbox" />
-              </div>
-              <button type="button" className="_hover03">
+                <ThemeCheckbox className="checkbox" name="checkbox" />
+              </PopUserTheme>
+              <PopUserButton type="button" className="_hover03">
                 <a href="#popExit">Выйти</a>
-              </button>
+              </PopUserButton>
             </PopUserSet>
           </HeaderNav>					
         </HeaderBlock>
