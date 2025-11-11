@@ -1,15 +1,20 @@
-import PopupExit from '../PopupExit/PopupExit';
-import PopupNewCard from '../PopupNewCard/PopupNewCard';
-import PopupBrowse from '../PopupBrowse/PopupBrowse';
+import { GlobalStyles } from './styles/GlobalStyles.styled';
+import { StyledWrapper } from './components/Wrapper/Wrapper.styled';
+import Header from './components/Header/Header';
+import Main from './components/Main/Main';
+import Popup from './components/Popup/Popup'; 
 
-function Popup() {
+function App() {
   return (
-    <div className="pop-wrap">
-      <PopupExit />
-      <PopupNewCard />
-      <PopupBrowse />
-    </div>
+    <>
+      <GlobalStyles />
+      <StyledWrapper className="wrapper">
+        <Header />
+        <Main />
+        <Popup /> 
+      </StyledWrapper>
+    </>
   );
 }
 
-export default Popup;
+export default App;

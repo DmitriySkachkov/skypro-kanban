@@ -1,5 +1,12 @@
 import styled from 'styled-components';
-import { PopupOverlay, PopupBlock, PopupTitle, PopupForm, PopupFormGroup, PopupButton } from '../Popup/Popup.styled';
+import { 
+  PopupOverlay, 
+  PopupBlock, 
+  PopupTitle, 
+  PopupForm, 
+  PopupFormGroup, 
+  PopupButton 
+} from '../Popup/Popup.styled';
 
 export const PopupExitOverlay = styled(PopupOverlay).attrs({ $zIndex: 5 })``;
 

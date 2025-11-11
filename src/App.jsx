@@ -2,7 +2,7 @@ import { GlobalStyles } from './styles/GlobalStyles.styled';
 import { StyledWrapper } from './components/Wrapper/Wrapper.styled';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main';
-import Popup from './components/Popup/Popup';
+// import Popup from './components/Popup/Popup'; // Временно закомментировать
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <StyledWrapper className="wrapper">
         <Header />
         <Main />
-        <Popup />
+        {/* <Popup /> */} {/* Временно закомментировать */}
       </StyledWrapper>
     </>
   );

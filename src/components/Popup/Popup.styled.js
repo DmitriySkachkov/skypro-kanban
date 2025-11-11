@@ -7,15 +7,17 @@ export const PopupOverlay = styled.div`
   height: 100%;
   min-width: 320px;
   min-height: 100vh;
-  position: fixed;
+  position: ${props => props.$isOpen ? 'fixed' : 'static'};
   top: 0;
   left: 0;
-  z-index: ${props => props.$zIndex || 5};
+  z-index: ${props => props.$isOpen ? (props.$zIndex || 5) : -1};
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.4);
   padding: 0 16px;
+  opacity: ${props => props.$isOpen ? 1 : 0};
+  pointer-events: ${props => props.$isOpen ? 'auto' : 'none'};
 `;
 
 export const PopupBlock = styled.div`
