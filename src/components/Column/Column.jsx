@@ -1,7 +1,7 @@
 import Card from '../Card/Card';
 import { ColumnContainer, ColumnTitle, CardsContainer } from './Column.styled';
 
-function Column({ title, cards = [] }) {
+function Column({ title, cards = [], onCardClick }) {
   return (
     <ColumnContainer className="column">
       <ColumnTitle>
@@ -11,9 +11,8 @@ function Column({ title, cards = [] }) {
         {cards.map(card => (
           <Card 
             key={card.id}
-            title={card.title}
-            topic={card.topic}
-            date={card.date}
+            card={card}
+            onCardClick={onCardClick}
           />
         ))}
       </CardsContainer>

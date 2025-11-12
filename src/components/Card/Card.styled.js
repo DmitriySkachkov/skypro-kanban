@@ -56,11 +56,18 @@ export const CardTheme = styled.div`
       default: return theme.colors.orange.text;
     }
   }};
+  
+  /* Центрирование текста */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  & div {
+  & p {
     font-size: 10px;
     font-weight: 600;
     line-height: 10px;
+    margin: 0;
+    padding: 0;
   }
 `;
 
@@ -71,7 +78,6 @@ export const CardButton = styled.div`
   align-items: center;
   justify-content: space-around;
   padding: 2px;
-  cursor: pointer;
 
   & div {
     width: 4px;
@@ -106,7 +112,7 @@ export const CardDate = styled.div`
     width: 13px;
   }
 
-  & div {
+  & p {
     margin-left: 6px;
     font-size: 10px;
     line-height: 13px;

@@ -5,7 +5,7 @@ import Loading from '../Loading/Loading';
 import { statuses } from '../../data';
 import { StyledMain, MainBlock, MainContent } from './Main.styled';
 
-function Main() {
+function Main({ onOpenPopup }) {
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -29,6 +29,10 @@ function Main() {
     return cards.filter(card => card.status === status);
   };
 
+  const handleCardClick = (card) => {
+    onOpenPopup('browse', card);
+  };
+
   return (
     <StyledMain>
       <StyledContainer>
@@ -42,6 +46,7 @@ function Main() {
                   key={index} 
                   title={status}
                   cards={getCardsByStatus(status)}
+                  onCardClick={handleCardClick}
                 />
               ))}
             </MainContent>

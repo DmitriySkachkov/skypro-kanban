@@ -9,7 +9,9 @@ import {
   CardDate
 } from './Card.styled';
 
-function Card({ title, topic, date }) {
+function Card({ card, onCardClick }) {
+  const { title, topic, date } = card;
+
   const getThemeClass = (topic) => {
     switch (topic) {
       case 'Web Design':
@@ -25,21 +27,31 @@ function Card({ title, topic, date }) {
 
   const theme = getThemeClass(topic);
 
+  const handleButtonClick = (e) => {
+    e.stopPropagation(); 
+    onCardClick(card);
+  };
+
   return (
     <CardItem className="cards__item">
       <CardContainer className="cards__card card">
         <CardGroup className="card__group">
           <CardTheme $theme={theme} className="card__theme">
-            <div>{topic}</div>
+            <p>{topic}</p>
           </CardTheme>
-          <CardButton className="card__btn">
+          <CardButton 
+            className="card__btn" 
+            onClick={handleButtonClick}
+          >
             <div></div>
             <div></div>
             <div></div>
           </CardButton>
         </CardGroup>
         <CardContent className="card__content">
-          <CardTitle className="card__title">{title}</CardTitle>
+          <a href="#" target="_blank">
+            <CardTitle className="card__title">{title}</CardTitle>
+          </a>
           <CardDate className="card__date">
             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
               <g clipPath="url(#clip0_1_415)">
@@ -52,7 +64,7 @@ function Card({ title, topic, date }) {
                 </clipPath>
               </defs>
             </svg>
-            <div>{date}</div>
+            <p>{date}</p>
           </CardDate>
         </CardContent>
       </CardContainer>

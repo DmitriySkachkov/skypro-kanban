@@ -34,17 +34,33 @@ import {
   PopupBrowseButtons
 } from './PopupBrowse.styled';
 
-function PopupBrowse({ isOpen, onClose }) {
+function PopupBrowse({ isOpen, onClose, cardData }) {
   if (!isOpen) return null;
+
+  const cardTitle = cardData?.title || 'Название задачи';
+  const cardTopic = cardData?.topic || 'Web Design';
+  const cardDescription = cardData?.description || 'Описание задачи. Здесь будет отображаться текст описания выбранной карточки.';
+  const cardDate = cardData?.date || '30.10.23';
+
+  const getThemeColor = (topic) => {
+    switch (topic) {
+      case 'Web Design': return 'orange';
+      case 'Research': return 'green';
+      case 'Copywriting': return 'purple';
+      default: return 'orange';
+    }
+  };
+
+  const themeColor = getThemeColor(cardTopic);
 
   return (
     <PopupBrowseOverlay className="pop-browse" $isOpen={isOpen}>
       <PopupBrowseBlock>
         <PopupBrowseContent>
           <PopupBrowseTopBlock>
-            <PopupBrowseTitle>Название задачи</PopupBrowseTitle>
-            <CategoriesTheme className="theme-top" $color="orange" $active>
-              <div>Web Design</div>
+            <PopupBrowseTitle>{cardTitle}</PopupBrowseTitle>
+            <CategoriesTheme className="theme-top" $color={themeColor} $active>
+              <p>{cardTopic}</p>
             </CategoriesTheme>
           </PopupBrowseTopBlock>
           
@@ -54,19 +70,19 @@ function PopupBrowse({ isOpen, onClose }) {
             </StatusText>
             <StatusThemes>
               <StatusTheme $hide>
-                <div>Без статуса</div>
+                <p>Без статуса</p>
               </StatusTheme>
               <StatusTheme $gray>
-                <div>Нужно сделать</div>
+                <p>Нужно сделать</p>
               </StatusTheme>
               <StatusTheme $hide>
-                <div>В работе</div>
+                <p>В работе</p>
               </StatusTheme>
               <StatusTheme $hide>
-                <div>Тестирование</div>
+                <p>Тестирование</p>
               </StatusTheme>
               <StatusTheme $hide>
-                <div>Готово</div>
+                <p>Готово</p>
               </StatusTheme>
             </StatusThemes>
           </Status>
@@ -80,7 +96,7 @@ function PopupBrowse({ isOpen, onClose }) {
                   id="textArea01" 
                   readOnly 
                   placeholder="Введите описание задачи..."
-                  value="Краткое описание задачи. Здесь будет отображаться текст описания выбранной карточки."
+                  value={cardDescription}
                 />
               </FormBrowseBlock>
             </PopupBrowseForm>
@@ -93,7 +109,7 @@ function PopupBrowse({ isOpen, onClose }) {
                 <CalendarNav>
                   <CalendarPeriod>
                     <CalendarText>
-                      Срок исполнения: <span className="date-control">09.09.23</span>
+                      Срок исполнения: <span className="date-control">{cardDate}</span>
                     </CalendarText>
                   </CalendarPeriod>
                   <NavActions>
@@ -157,8 +173,8 @@ function PopupBrowse({ isOpen, onClose }) {
               <Subtitle>Категория</Subtitle>
             </CategoriesText>
             <CategoriesThemes>
-              <CategoriesTheme $color="orange" $active>
-                <div>Web Design</div>
+              <CategoriesTheme $color={themeColor} $active>
+                <p>{cardTopic}</p>
               </CategoriesTheme>
             </CategoriesThemes>
           </Categories>
@@ -166,14 +182,14 @@ function PopupBrowse({ isOpen, onClose }) {
           <PopupBrowseButtons className="pop-browse__btn-browse">
             <div className="btn-group">
               <button className="_btn-bor _hover03">
-                Редактировать задачу
+                <a href="#">Редактировать задачу</a>
               </button>
               <button className="_btn-bor _hover03">
-                Удалить задачу
+                <a href="#">Удалить задачу</a>
               </button>
             </div>
             <button className="_btn-bg _hover01" onClick={onClose}>
-              Закрыть
+              <a href="#">Закрыть</a>
             </button>
           </PopupBrowseButtons>
         </PopupBrowseContent>

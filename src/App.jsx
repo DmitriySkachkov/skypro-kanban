@@ -6,15 +6,30 @@ import Main from './components/Main/Main';
 import Popup from './components/Popup/Popup';
 
 function App() {
-  const [activePopup, setActivePopup] = useState('browse');
+  const [activePopup, setActivePopup] = useState(null); 
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  const openPopup = (popupName, cardData = null) => {
+    setActivePopup(popupName);
+    setSelectedCard(cardData);
+  };
+
+  const closePopup = () => {
+    setActivePopup(null);
+    setSelectedCard(null);
+  };
 
   return (
     <>
       <GlobalStyles />
       <StyledWrapper className="wrapper">
-        <Header onOpenPopup={setActivePopup} />
-        <Main />
-        <Popup activePopup={activePopup} onClosePopup={() => setActivePopup(null)} />
+        <Header onOpenPopup={openPopup} />
+        <Main onOpenPopup={openPopup} />
+        <Popup 
+          activePopup={activePopup} 
+          onClosePopup={closePopup}
+          selectedCard={selectedCard}
+        />
       </StyledWrapper>
     </>
   );

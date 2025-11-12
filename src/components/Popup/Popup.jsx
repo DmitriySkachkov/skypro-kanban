@@ -2,7 +2,7 @@ import PopupExit from '../PopupExit/PopupExit';
 import PopupNewCard from '../PopupNewCard/PopupNewCard';
 import PopupBrowse from '../PopupBrowse/PopupBrowse';
 
-function Popup({ activePopup, onClosePopup }) {
+function Popup({ activePopup, onClosePopup, selectedCard }) {
   return (
     <div className="pop-wrap">
       <PopupExit 
@@ -15,7 +15,8 @@ function Popup({ activePopup, onClosePopup }) {
       />
       <PopupBrowse 
         isOpen={activePopup === 'browse'} 
-        onClose={onClosePopup} 
+        onClose={onClosePopup}
+        cardData={selectedCard}
       />
     </div>
   );
