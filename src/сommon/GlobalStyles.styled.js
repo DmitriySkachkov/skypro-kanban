@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { theme } from './theme';
 
 export const GlobalStyles = createGlobalStyle`
   * {
@@ -33,7 +34,8 @@ export const GlobalStyles = createGlobalStyle`
     width: 100%;
     height: 100%;
     font-family: "Roboto", Arial, Helvetica, sans-serif;
-    color: #000000;
+    color: ${theme.colors.textPrimary};
+    background-color: ${theme.colors.mainBg};
   }
 
   @keyframes card-animation {
@@ -48,43 +50,43 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   ._hover01:hover {
-    background-color: #33399b;
+    background-color: ${theme.colors.primaryHover};
   }
 
   ._hover02:hover, .header__user:hover {
-    color: #33399b;
+    color: ${theme.colors.primaryHover};
   }
   ._hover02:hover::after, .header__user:hover::after {
-    border-left-color: #33399b;
-    border-bottom-color: #33399b;
+    border-left-color: ${theme.colors.primaryHover};
+    border-bottom-color: ${theme.colors.primaryHover};
   }
 
   ._hover03:hover {
-    background-color: #33399b;
-    color: #FFFFFF;
+    background-color: ${theme.colors.primaryHover};
+    color: ${theme.colors.white};
   }
   ._hover03:hover a {
-    color: #FFFFFF;
+    color: ${theme.colors.white};
   }
 
   ._orange {
-    background-color: #FFE4C2;
-    color: #FF6D00;
+    background-color: ${theme.colors.orange.background};
+    color: ${theme.colors.orange.text};
   }
 
   ._green {
-    background-color: #B4FDD1;
-    color: #06B16E;
+    background-color: ${theme.colors.green.background};
+    color: ${theme.colors.green.text};
   }
 
   ._purple {
-    background-color: #E9D4FF;
-    color: #9A48F1;
+    background-color: ${theme.colors.purple.background};
+    color: ${theme.colors.purple.text};
   }
 
   ._gray {
-    background: #94A6BE;
-    color: #FFFFFF;
+    background: ${theme.colors.gray.background};
+    color: ${theme.colors.gray.text};
   }
 
   ._active-category {
@@ -93,24 +95,24 @@ export const GlobalStyles = createGlobalStyle`
 
   ._btn-bor {
     border-radius: 4px;
-    border: 0.7px solid var(--palette-navy-60, #565EEF);
+    border: 0.7px solid ${theme.colors.primary};
     outline: none;
     background: transparent;
-    color: #565EEF;
+    color: ${theme.colors.primary};
   }
   ._btn-bor a {
-    color: #565EEF;
+    color: ${theme.colors.primary};
   }
 
   ._btn-bg {
     border-radius: 4px;
-    background: #565EEF;
+    background: ${theme.colors.primary};
     border: none;
     outline: none;
-    color: #FFFFFF;
+    color: ${theme.colors.white};
   }
   ._btn-bg a {
-    color: #FFFFFF;
+    color: ${theme.colors.white};
   }
 
   ._hide {

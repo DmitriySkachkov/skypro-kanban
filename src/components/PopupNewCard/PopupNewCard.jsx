@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   PopupNewCardOverlay,
   PopupNewCardBlock,
@@ -31,15 +32,36 @@ import {
   CategoriesTheme
 } from './PopupNewCard.styled';
 
-function PopupNewCard() {
+function PopupNewCard({ isOpen, onClose }) {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('orange');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Создана новая карточка:', { title, description, category: selectedCategory });
+    onClose();
+    setTitle('');
+    setDescription('');
+    setSelectedCategory('orange');
+  };
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+  };
+
+  if (!isOpen) return null;
+
   return (
-    <PopupNewCardOverlay className="pop-new-card" id="popNewCard" $isOpen={false}>
+    <PopupNewCardOverlay className="pop-new-card" $isOpen={isOpen}>
       <PopupNewCardBlock>
         <PopupNewCardContent>
           <PopupNewCardTitle>Создание задачи</PopupNewCardTitle>
-          <PopupNewCardClose href="#">✖</PopupNewCardClose>
+          <PopupNewCardClose href="#" onClick={(e) => { e.preventDefault(); onClose(); }}>
+            ✖
+          </PopupNewCardClose>
           <PopupNewCardWrap>
-            <PopupNewCardForm id="formNewCard" action="#">
+            <PopupNewCardForm id="formNewCard" onSubmit={handleSubmit}>
               <FormNewBlock>
                 <Subtitle>Название задачи</Subtitle>
                 <FormNewInput 
@@ -47,7 +69,10 @@ function PopupNewCard() {
                   name="name" 
                   id="formTitle" 
                   placeholder="Введите название задачи..." 
-                  autoComplete="off" 
+                  autoComplete="off"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  required
                 />
               </FormNewBlock>
               <FormNewBlock>
@@ -56,6 +81,8 @@ function PopupNewCard() {
                   name="text" 
                   id="textArea" 
                   placeholder="Введите описание задачи..."
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </FormNewBlock>
             </PopupNewCardForm>
@@ -67,8 +94,8 @@ function PopupNewCard() {
                 <CalendarNav>
                   <CalendarMonth>Сентябрь 2023</CalendarMonth>
                   <NavActions>
-                    <NavAction data-action="prev">‹</NavAction>
-                    <NavAction data-action="next">›</NavAction>
+                    <NavAction>‹</NavAction>
+                    <NavAction>›</NavAction>
                   </NavActions>
                 </CalendarNav>
                 <CalendarContent>
@@ -82,14 +109,39 @@ function PopupNewCard() {
                     <CalendarDayName>вс</CalendarDayName>
                   </CalendarDaysNames>
                   <CalendarCells>
-                    {/* Пример календарных ячеек */}
                     <CalendarCell $otherMonth>28</CalendarCell>
                     <CalendarCell $otherMonth>29</CalendarCell>
                     <CalendarCell $otherMonth>30</CalendarCell>
                     <CalendarCell $isDay>1</CalendarCell>
                     <CalendarCell $isDay $current>2</CalendarCell>
                     <CalendarCell $isDay>3</CalendarCell>
-                    {/* ... остальные дни */}
+                    <CalendarCell $isDay>4</CalendarCell>
+                    <CalendarCell $isDay>5</CalendarCell>
+                    <CalendarCell $isDay>6</CalendarCell>
+                    <CalendarCell $isDay>7</CalendarCell>
+                    <CalendarCell $isDay>8</CalendarCell>
+                    <CalendarCell $isDay>9</CalendarCell>
+                    <CalendarCell $isDay>10</CalendarCell>
+                    <CalendarCell $isDay>11</CalendarCell>
+                    <CalendarCell $isDay>12</CalendarCell>
+                    <CalendarCell $isDay>13</CalendarCell>
+                    <CalendarCell $isDay>14</CalendarCell>
+                    <CalendarCell $isDay>15</CalendarCell>
+                    <CalendarCell $isDay>16</CalendarCell>
+                    <CalendarCell $isDay>17</CalendarCell>
+                    <CalendarCell $isDay>18</CalendarCell>
+                    <CalendarCell $isDay>19</CalendarCell>
+                    <CalendarCell $isDay>20</CalendarCell>
+                    <CalendarCell $isDay>21</CalendarCell>
+                    <CalendarCell $isDay>22</CalendarCell>
+                    <CalendarCell $isDay>23</CalendarCell>
+                    <CalendarCell $isDay>24</CalendarCell>
+                    <CalendarCell $isDay>25</CalendarCell>
+                    <CalendarCell $isDay>26</CalendarCell>
+                    <CalendarCell $isDay>27</CalendarCell>
+                    <CalendarCell $isDay>28</CalendarCell>
+                    <CalendarCell $isDay>29</CalendarCell>
+                    <CalendarCell $isDay>30</CalendarCell>
                   </CalendarCells>
                 </CalendarContent>
                 <CalendarPeriod>
@@ -105,18 +157,32 @@ function PopupNewCard() {
               <Subtitle>Категория</Subtitle>
             </CategoriesText>
             <CategoriesThemes>
-              <CategoriesTheme $color="orange" $active>
+              <CategoriesTheme 
+                $color="orange" 
+                $active={selectedCategory === 'orange'}
+                onClick={() => handleCategoryClick('orange')}
+              >
                 <p>Web Design</p>
               </CategoriesTheme>
-              <CategoriesTheme $color="green">
+              <CategoriesTheme 
+                $color="green"
+                $active={selectedCategory === 'green'}
+                onClick={() => handleCategoryClick('green')}
+              >
                 <p>Research</p>
               </CategoriesTheme>
-              <CategoriesTheme $color="purple">
+              <CategoriesTheme 
+                $color="purple"
+                $active={selectedCategory === 'purple'}
+                onClick={() => handleCategoryClick('purple')}
+              >
                 <p>Copywriting</p>
               </CategoriesTheme>
             </CategoriesThemes>
           </Categories>
-          <FormNewCreate id="btnCreate">Создать задачу</FormNewCreate>
+          <FormNewCreate id="btnCreate" onClick={handleSubmit}>
+            Создать задачу
+          </FormNewCreate>
         </PopupNewCardContent>
       </PopupNewCardBlock>
     </PopupNewCardOverlay>

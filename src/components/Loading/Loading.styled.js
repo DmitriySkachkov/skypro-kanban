@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { theme } from '../../../common/theme';
 
 export const LoadingContainer = styled.div`
   display: flex;
@@ -10,6 +11,6 @@ export const LoadingContainer = styled.div`
 
 export const LoadingText = styled.p`
   font-size: 18px;
-  color: #94A6BE;
+  color: ${theme.colors.textSecondary};
   font-weight: 500;
 `;

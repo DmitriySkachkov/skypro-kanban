@@ -27,23 +27,19 @@ function Card({ title, topic, date }) {
 
   return (
     <CardItem className="cards__item">
-      <CardContainer className="cards__card card">
+      <CardContainer className="card">
         <CardGroup className="card__group">
           <CardTheme $theme={theme} className="card__theme">
             <p>{topic}</p>
           </CardTheme>
-          <a href="#popBrowse" target="_self">
-            <CardButton className="card__btn">
-              <div></div>
-              <div></div>
-              <div></div>
-            </CardButton>
-          </a>
+          <CardButton className="card__btn">
+            <div></div>
+            <div></div>
+            <div></div>
+          </CardButton>
         </CardGroup>
         <CardContent className="card__content">
-          <a href="#" target="_blank">
-            <CardTitle className="card__title">{title}</CardTitle>
-          </a>
+          <CardTitle className="card__title">{title}</CardTitle>
           <CardDate className="card__date">
             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
               <g clipPath="url(#clip0_1_415)">

@@ -16,7 +16,11 @@ export const PopupExitBlock = styled(PopupBlock).attrs({
 })``;
 
 export const PopupExitFormGroup = styled(PopupFormGroup)`
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+
   @media only screen and (max-width: 375px) {
-    display: block;
+    flex-direction: column;
   }
 `;

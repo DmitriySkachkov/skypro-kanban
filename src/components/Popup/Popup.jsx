@@ -1,20 +1,24 @@
-import { GlobalStyles } from './styles/GlobalStyles.styled';
-import { StyledWrapper } from './components/Wrapper/Wrapper.styled';
-import Header from './components/Header/Header';
-import Main from './components/Main/Main';
-import Popup from './components/Popup/Popup'; 
+import PopupExit from '../PopupExit/PopupExit';
+import PopupNewCard from '../PopupNewCard/PopupNewCard';
+import PopupBrowse from '../PopupBrowse/PopupBrowse';
 
-function App() {
+function Popup({ activePopup, onClosePopup }) {
   return (
-    <>
-      <GlobalStyles />
-      <StyledWrapper className="wrapper">
-        <Header />
-        <Main />
-        <Popup /> 
-      </StyledWrapper>
-    </>
+    <div className="pop-wrap">
+      <PopupExit 
+        isOpen={activePopup === 'exit'} 
+        onClose={onClosePopup} 
+      />
+      <PopupNewCard 
+        isOpen={activePopup === 'newCard'} 
+        onClose={onClosePopup} 
+      />
+      <PopupBrowse 
+        isOpen={activePopup === 'browse'} 
+        onClose={onClosePopup} 
+      />
+    </div>
   );
 }
 
-export default App;
+export default Popup;

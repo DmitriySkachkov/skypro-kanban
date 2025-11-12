@@ -1,9 +1,12 @@
 import styled from 'styled-components';
+import { theme } from '../../common/theme'; 
 
 export const StyledHeader = styled.header`
   width: 100%;
   margin: 0 auto;
-  background-color: #FFFFFF;
+  background-color: ${theme.colors.headerBg};
+  padding: 0;
+  position: relative;
 `;
 
 export const HeaderBlock = styled.div`
@@ -15,7 +18,7 @@ export const HeaderBlock = styled.div`
   position: relative;
   top: 0;
   left: 0;
-  padding: 0 10px;
+  padding: 0;
 `;
 
 export const HeaderLogo = styled.div`
@@ -25,53 +28,31 @@ export const HeaderLogo = styled.div`
 `;
 
 export const HeaderNav = styled.nav`
-  max-width: 290px;
-  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 20px;
+  position: relative;
 `;
 
 export const HeaderButton = styled.button`
   width: 178px;
   height: 30px;
   border-radius: 4px;
-  background-color: #565EEF;
-  color: #FFFFFF;
+  background-color: ${theme.colors.primary};
+  color: ${theme.colors.white};
   border: none;
   font-size: 14px;
   line-height: 1;
   font-weight: 500;
-  margin-right: 20px;
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: #33399b;
-  }
-
-  & a {
-    color: #FFFFFF;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  @media screen and (max-width: 495px) {
-    z-index: 3;
-    position: fixed;
-    left: 16px;
-    bottom: 30px;
-    top: auto;
-    width: calc(100vw - 32px);
-    height: 40px;
-    border-radius: 4px;
-    margin-right: 0;
+    background-color: ${theme.colors.primaryHover};
   }
 `;
 
-export const HeaderUser = styled.a`
+export const HeaderUser = styled.div`
   height: 20px;
   display: flex;
   flex-wrap: nowrap;
@@ -79,16 +60,17 @@ export const HeaderUser = styled.a`
   justify-content: center;
   font-size: 14px;
   line-height: 20px;
-  color: #565EEF;
+  color: ${theme.colors.primary};
   transition: color 0.2s ease;
   position: relative;
+  cursor: pointer;
 
   &:hover {
-    color: #33399b;
+    color: ${theme.colors.primaryHover};
 
     &::after {
-      border-left-color: #33399b;
-      border-bottom-color: #33399b;
+      border-left-color: ${theme.colors.primaryHover};
+      border-bottom-color: ${theme.colors.primaryHover};
     }
   }
 
@@ -98,8 +80,8 @@ export const HeaderUser = styled.a`
     width: 6px;
     height: 6px;
     border-radius: 1px;
-    border-left: 1.9px solid #565EEF;
-    border-bottom: 1.9px solid #565EEF;
+    border-left: 1.9px solid ${theme.colors.primary};
+    border-bottom: 1.9px solid ${theme.colors.primary};
     transform: rotate(-45deg);
     margin: -6px 0 0 5px;
     padding: 0;
@@ -115,16 +97,16 @@ export const PopUserSet = styled.div`
   width: 213px;
   height: 205px;
   border-radius: 10px;
-  border: 0.7px solid rgba(148, 166, 190, 0.4);
-  background: #FFF;
-  box-shadow: 0px 10px 39px 0px rgba(26, 56, 101, 0.21);
+  border: 0.7px solid ${theme.colors.borderLight};
+  background: ${theme.colors.white};
+  box-shadow: ${theme.colors.shadow};
   padding: 34px;
   text-align: center;
   z-index: 2;
 `;
 
 export const PopUserName = styled.p`
-  color: #000;
+  color: ${theme.colors.textPrimary};
   font-size: 14px;
   font-weight: 500;
   line-height: 21px;
@@ -133,7 +115,7 @@ export const PopUserName = styled.p`
 `;
 
 export const PopUserMail = styled.p`
-  color: #94A6BE;
+  color: ${theme.colors.textSecondary};
   font-size: 14px;
   line-height: 21px;
   letter-spacing: -0.14px;
@@ -147,7 +129,7 @@ export const PopUserTheme = styled.div`
   margin-bottom: 30px;
 
   & p {
-    color: #000;
+    color: ${theme.colors.textPrimary};
     font-size: 14px;
     line-height: 21px;
     letter-spacing: -0.14px;
@@ -171,7 +153,7 @@ export const ThemeCheckbox = styled.input.attrs({ type: 'checkbox' })`
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    background-color: #94A6BE;
+    background-color: ${theme.colors.textSecondary};
     transition: 0.5s;
   }
 
@@ -184,17 +166,13 @@ export const PopUserButton = styled.button`
   width: 72px;
   height: 30px;
   background: transparent;
-  color: #565EEF;
+  color: ${theme.colors.primary};
   border-radius: 4px;
-  border: 1px solid #565EEF;
+  border: 1px solid ${theme.colors.primary};
   transition: all 0.2s ease;
 
   &:hover {
-    background-color: #565EEF;
-    color: #FFFFFF;
-  }
-
-  & a {
-    color: inherit;
+    background-color: ${theme.colors.primary};
+    color: ${theme.colors.white};
   }
 `;

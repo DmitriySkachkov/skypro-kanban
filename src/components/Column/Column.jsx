@@ -3,7 +3,7 @@ import { ColumnContainer, ColumnTitle, CardsContainer } from './Column.styled';
 
 function Column({ title, cards = [] }) {
   return (
-    <ColumnContainer className="main__column column">
+    <ColumnContainer className="column">
       <ColumnTitle>
         <p>{title}</p>
       </ColumnTitle>

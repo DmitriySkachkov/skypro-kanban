@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { StyledContainer } from '../../common/Container.styled';
 import {
   StyledHeader,
   HeaderBlock,
@@ -14,52 +15,40 @@ import {
   PopUserButton
 } from './Header.styled';
 
-function Header() {
+function Header({ onOpenPopup }) {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-
-  const toggleUserMenu = () => {
-    setIsUserMenuOpen(!isUserMenuOpen);
-  };
 
   return (
     <StyledHeader>
-      <div className="container">
+      <StyledContainer>
         <HeaderBlock>
-          <HeaderLogo className="_show _light">
-            <a href="#" target="_self"><img src="/public/logo.png" alt="logo" /></a>
-          </HeaderLogo>
-          <HeaderLogo className="_dark">
-            <a href="#" target="_self"><img src="/public/logo_dark.png" alt="logo" /></a>
+          <HeaderLogo>
+            <a href="#" target="_self"><img src="/images/logo.png" alt="logo" /></a>
           </HeaderLogo>
           <HeaderNav>
-            <HeaderButton className="_hover01" id="btnMainNew">
-              <a href="#popNewCard">Создать новую задачу</a>
+            <HeaderButton className="_hover01" onClick={() => onOpenPopup('newCard')}>
+              Создать новую задачу
             </HeaderButton>
             <HeaderUser 
-              href="#user-set-target"
               className="_hover02"
-              onClick={toggleUserMenu}
+              onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
             >
               Ivan Ivanov
             </HeaderUser>
-            <PopUserSet 
-              className="pop-user-set"
-              id="user-set-target"
-              $isOpen={isUserMenuOpen}
-            >
+            <PopUserSet $isOpen={isUserMenuOpen}>
               <PopUserName>Ivan Ivanov</PopUserName>
               <PopUserMail>ivan.ivanov@gmail.com</PopUserMail>
               <PopUserTheme>
                 <p>Темная тема</p>
                 <ThemeCheckbox className="checkbox" name="checkbox" />
               </PopUserTheme>
-              <PopUserButton type="button" className="_hover03">
-                <a href="#popExit">Выйти</a>
+              <PopUserButton type="button" className="_hover03" onClick={() => onOpenPopup('exit')}>
+                Выйти
               </PopUserButton>
             </PopUserSet>
           </HeaderNav>					
         </HeaderBlock>
-      </div>			
+      </StyledContainer>
     </StyledHeader>
   );
 }

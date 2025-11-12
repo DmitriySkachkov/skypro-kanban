@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { theme } from '../../../common/theme';
 
 export const CardItem = styled.div`
   padding: 5px;
@@ -10,13 +11,19 @@ export const CardItem = styled.div`
 export const CardContainer = styled.div`
   width: 220px;
   height: 130px;
-  background-color: #FFFFFF;
+  background-color: ${theme.colors.cardBg};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: stretch;
   padding: 15px 13px 19px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 `;
 
 export const CardGroup = styled.div`
@@ -35,18 +42,18 @@ export const CardTheme = styled.div`
   border-radius: 18px;
   background-color: ${props => {
     switch (props.$theme) {
-      case 'orange': return '#FFE4C2';
-      case 'green': return '#B4FDD1';
-      case 'purple': return '#E9D4FF';
-      default: return '#FFE4C2';
+      case 'orange': return theme.colors.orange.background;
+      case 'green': return theme.colors.green.background;
+      case 'purple': return theme.colors.purple.background;
+      default: return theme.colors.orange.background;
     }
   }};
   color: ${props => {
     switch (props.$theme) {
-      case 'orange': return '#FF6D00';
-      case 'green': return '#06B16E';
-      case 'purple': return '#9A48F1';
-      default: return '#FF6D00';
+      case 'orange': return theme.colors.orange.text;
+      case 'green': return theme.colors.green.text;
+      case 'purple': return theme.colors.purple.text;
+      default: return theme.colors.orange.text;
     }
   }};
 
@@ -64,12 +71,13 @@ export const CardButton = styled.div`
   align-items: center;
   justify-content: space-around;
   padding: 2px;
+  cursor: pointer;
 
   & div {
     width: 4px;
     height: 4px;
     border-radius: 50%;
-    background-color: #94A6BE;
+    background-color: ${theme.colors.textSecondary};
   }
 `;
 
@@ -85,7 +93,7 @@ export const CardTitle = styled.h3`
   font-size: 14px;
   font-weight: 500;
   line-height: 18px;
-  color: #000000;
+  color: ${theme.colors.textPrimary};
   margin-bottom: 10px;
 `;
 
@@ -102,7 +110,7 @@ export const CardDate = styled.div`
     margin-left: 6px;
     font-size: 10px;
     line-height: 13px;
-    color: #94A6BE;
+    color: ${theme.colors.textSecondary};
     letter-spacing: 0.2px;
   }
 `;

@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 import { PopupOverlay, PopupBlock } from '../Popup/Popup.styled';
+import { theme } from '../../../common/theme';
 
 export const PopupBrowseOverlay = styled(PopupOverlay).attrs({ $zIndex: 7 })`
-  @media screen and (max-width: 660px) {
+  @media screen and (max-width: ${theme.breakpoints.laptop}) {
     top: 70px;
   }
 
-  @media screen and (max-width: 495px) {
+  @media screen and (max-width: ${theme.breakpoints.tablet}) {
     padding: 0;
     justify-content: flex-start;
   }
@@ -16,11 +17,11 @@ export const PopupBrowseBlock = styled(PopupBlock).attrs({
   $maxWidth: '630px',
   $padding: '40px 30px 38px'
 })`
-  @media screen and (max-width: 660px) {
+  @media screen and (max-width: ${theme.breakpoints.laptop}) {
     border-radius: 0;
   }
 
-  @media screen and (max-width: 495px) {
+  @media screen and (max-width: ${theme.breakpoints.tablet}) {
     padding: 20px 16px 32px;
   }
 `;
@@ -38,7 +39,7 @@ export const PopupBrowseContent = styled.div`
     display: block;
   }
 
-  @media screen and (max-width: 495px) {
+  @media screen and (max-width: ${theme.breakpoints.tablet}) {
     .theme-down {
       display: block;
       margin-bottom: 20px;
@@ -58,7 +59,7 @@ export const PopupBrowseTopBlock = styled.div`
 `;
 
 export const PopupBrowseTitle = styled.h3`
-  color: #000;
+  color: ${theme.colors.textPrimary};
   font-size: 20px;
   font-weight: 600;
   line-height: 24px;
@@ -69,7 +70,7 @@ export const PopupBrowseWrap = styled.div`
   align-items: flex-start;
   justify-content: space-between;
 
-  @media screen and (max-width: 660px) {
+  @media screen and (max-width: ${theme.breakpoints.laptop}) {
     display: block;
   }
 `;
@@ -80,7 +81,7 @@ export const PopupBrowseForm = styled.form`
   display: block;
   margin-bottom: 20px;
 
-  @media screen and (max-width: 495px) {
+  @media screen and (max-width: ${theme.breakpoints.tablet}) {
     max-width: 100%;
   }
 `;
@@ -96,7 +97,7 @@ export const FormBrowseArea = styled.textarea`
   outline: none;
   padding: 14px;
   background: #EAEEF6;
-  border: 0.7px solid rgba(148, 166, 190, 0.4);
+  border: 0.7px solid ${theme.colors.borderLight};
   border-radius: 8px;
   font-size: 14px;
   line-height: 1;
@@ -109,11 +110,11 @@ export const FormBrowseArea = styled.textarea`
     font-weight: 400;
     font-size: 14px;
     line-height: 1px;
-    color: #94A6BE;
+    color: ${theme.colors.textSecondary};
     letter-spacing: -0.14px;
   }
 
-  @media screen and (max-width: 495px) {
+  @media screen and (max-width: ${theme.breakpoints.tablet}) {
     max-width: 100%;
     height: 37px;
   }
@@ -136,8 +137,8 @@ export const StatusThemes = styled.div`
 
 export const StatusTheme = styled.div`
   border-radius: 24px;
-  border: 0.7px solid rgba(148, 166, 190, 0.4);
-  color: #94A6BE;
+  border: 0.7px solid ${theme.colors.borderLight};
+  color: ${theme.colors.textSecondary};
   padding: 11px 14px 10px;
   margin-right: 7px;
   margin-bottom: 7px;
@@ -149,8 +150,8 @@ export const StatusTheme = styled.div`
   }
 
   ${props => props.$gray && `
-    background: #94A6BE;
-    color: #FFFFFF;
+    background: ${theme.colors.gray.background};
+    color: ${theme.colors.gray.text};
   `}
 
   ${props => props.$hide && `
@@ -174,7 +175,7 @@ export const PopupBrowseButtons = styled.div`
     margin-right: 8px;
   }
 
-  @media screen and (max-width: 495px) {
+  @media screen and (max-width: ${theme.breakpoints.tablet}) {
     & button {
       width: 100%;
       height: 40px;

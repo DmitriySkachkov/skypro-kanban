@@ -7,18 +7,23 @@ import {
   PopupButton 
 } from './PopupExit.styled';
 
-function PopupExit() {
+function PopupExit({ isOpen, onClose }) {
+  const handleNoClick = (e) => {
+    e.preventDefault();
+    onClose();
+  };
+
   return (
-    <PopupExitOverlay className="pop-exit" id="popExit" $isOpen={false}>
+    <PopupExitOverlay className="pop-exit" $isOpen={isOpen}>
       <PopupExitBlock>
         <PopupTitle>Выйти из аккаунта?</PopupTitle>
         <PopupForm id="formExit" action="#">
           <PopupExitFormGroup>
             <PopupButton $variant="primary" id="exitYes">
-              <a href="#exit">Да, выйти</a>
+              Да, выйти
             </PopupButton>
-            <PopupButton $variant="secondary" id="exitNo">
-              <a href="#stay">Нет, остаться</a>
+            <PopupButton $variant="secondary" id="exitNo" onClick={handleNoClick}>
+              Нет, остаться
             </PopupButton>
           </PopupExitFormGroup>
         </PopupForm>

@@ -34,9 +34,11 @@ import {
   PopupBrowseButtons
 } from './PopupBrowse.styled';
 
-function PopupBrowse() {
+function PopupBrowse({ isOpen, onClose }) {
+  if (!isOpen) return null;
+
   return (
-    <PopupBrowseOverlay className="pop-browse" id="popBrowse" $isOpen={false}>
+    <PopupBrowseOverlay className="pop-browse" $isOpen={isOpen}>
       <PopupBrowseBlock>
         <PopupBrowseContent>
           <PopupBrowseTopBlock>
@@ -78,6 +80,7 @@ function PopupBrowse() {
                   id="textArea01" 
                   readOnly 
                   placeholder="Введите описание задачи..."
+                  value="Краткое описание задачи. Здесь будет отображаться текст описания выбранной карточки."
                 />
               </FormBrowseBlock>
             </PopupBrowseForm>
@@ -94,9 +97,9 @@ function PopupBrowse() {
                     </CalendarText>
                   </CalendarPeriod>
                   <NavActions>
-                    <NavAction data-action="prev">‹</NavAction>
+                    <NavAction>‹</NavAction>
                     <CalendarMonth>Сентябрь 2023</CalendarMonth>
-                    <NavAction data-action="next">›</NavAction>
+                    <NavAction>›</NavAction>
                   </NavActions>
                 </CalendarNav>
                 <CalendarContent>
@@ -110,14 +113,39 @@ function PopupBrowse() {
                     <CalendarDayName>вс</CalendarDayName>
                   </CalendarDaysNames>
                   <CalendarCells>
-                    {/* Пример календарных ячеек */}
                     <CalendarCell $otherMonth>28</CalendarCell>
                     <CalendarCell $otherMonth>29</CalendarCell>
                     <CalendarCell $otherMonth>30</CalendarCell>
                     <CalendarCell $isDay>1</CalendarCell>
                     <CalendarCell $isDay $current>2</CalendarCell>
                     <CalendarCell $isDay $active>3</CalendarCell>
-                    {/* ... остальные дни */}
+                    <CalendarCell $isDay>4</CalendarCell>
+                    <CalendarCell $isDay>5</CalendarCell>
+                    <CalendarCell $isDay>6</CalendarCell>
+                    <CalendarCell $isDay>7</CalendarCell>
+                    <CalendarCell $isDay>8</CalendarCell>
+                    <CalendarCell $isDay>9</CalendarCell>
+                    <CalendarCell $isDay>10</CalendarCell>
+                    <CalendarCell $isDay>11</CalendarCell>
+                    <CalendarCell $isDay>12</CalendarCell>
+                    <CalendarCell $isDay>13</CalendarCell>
+                    <CalendarCell $isDay>14</CalendarCell>
+                    <CalendarCell $isDay>15</CalendarCell>
+                    <CalendarCell $isDay>16</CalendarCell>
+                    <CalendarCell $isDay>17</CalendarCell>
+                    <CalendarCell $isDay>18</CalendarCell>
+                    <CalendarCell $isDay>19</CalendarCell>
+                    <CalendarCell $isDay>20</CalendarCell>
+                    <CalendarCell $isDay>21</CalendarCell>
+                    <CalendarCell $isDay>22</CalendarCell>
+                    <CalendarCell $isDay>23</CalendarCell>
+                    <CalendarCell $isDay>24</CalendarCell>
+                    <CalendarCell $isDay>25</CalendarCell>
+                    <CalendarCell $isDay>26</CalendarCell>
+                    <CalendarCell $isDay>27</CalendarCell>
+                    <CalendarCell $isDay>28</CalendarCell>
+                    <CalendarCell $isDay>29</CalendarCell>
+                    <CalendarCell $isDay>30</CalendarCell>
                   </CalendarCells>
                 </CalendarContent>
               </CalendarBlock>
@@ -138,14 +166,14 @@ function PopupBrowse() {
           <PopupBrowseButtons className="pop-browse__btn-browse">
             <div className="btn-group">
               <button className="_btn-bor _hover03">
-                <a href="#">Редактировать задачу</a>
+                Редактировать задачу
               </button>
               <button className="_btn-bor _hover03">
-                <a href="#">Удалить задачу</a>
+                Удалить задачу
               </button>
             </div>
-            <button className="_btn-bg _hover01">
-              <a href="#">Закрыть</a>
+            <button className="_btn-bg _hover01" onClick={onClose}>
+              Закрыть
             </button>
           </PopupBrowseButtons>
         </PopupBrowseContent>

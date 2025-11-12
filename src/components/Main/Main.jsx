@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { StyledContainer } from '../../common/Container.styled';
 import Column from '../Column/Column';
 import Loading from '../Loading/Loading';
-import { statuses } from '../../data';
+import { statuses } from '../../../data';
 import { StyledMain, MainBlock, MainContent } from './Main.styled';
 
 function Main() {
@@ -12,7 +13,7 @@ function Main() {
     const loadCards = async () => {
       try {
         await new Promise(resolve => setTimeout(resolve, 2000));
-        const { cardsData } = await import('../../data');
+        const { cardsData } = await import('../../../data');
         setCards(cardsData);
       } catch (error) {
         console.error('Ошибка загрузки данных:', error);
@@ -30,7 +31,7 @@ function Main() {
 
   return (
     <StyledMain>
-      <div className="container">
+      <StyledContainer>
         <MainBlock>
           {isLoading ? (
             <Loading />
@@ -46,7 +47,7 @@ function Main() {
             </MainContent>
           )}
         </MainBlock>
-      </div>
+      </StyledContainer>
     </StyledMain>
   );
 }

@@ -85,7 +85,7 @@ export const cardsData = [
     date: "30.10.23",
     status: "Готово"
   }
-]
+];
 
 export const statuses = [
   "Без статуса",
@@ -93,4 +93,4 @@ export const statuses = [
   "В работе",
   "Тестирование",
   "Готово"
-]
+];
