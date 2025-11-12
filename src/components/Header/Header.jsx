@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyledContainer } from '../../common/Container.styled';
+import { StyledContainer } from '../../Container.styled';
 import {
   StyledHeader,
   HeaderBlock,
@@ -17,13 +17,26 @@ import {
 
 function Header({ onOpenPopup }) {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  const handleThemeToggle = () => {
+    setIsDarkTheme(!isDarkTheme);
+  };
 
   return (
     <StyledHeader>
       <StyledContainer>
         <HeaderBlock>
           <HeaderLogo>
-            <a href="#" target="_self"><img src="/images/logo.png" alt="logo" /></a>
+            {isDarkTheme ? (
+              <a href="#" target="_self">
+                <img src="/logo_dark.png" alt="logo" />
+              </a>
+            ) : (
+              <a href="#" target="_self">
+                <img src="/logo.png" alt="logo" />
+              </a>
+            )}
           </HeaderLogo>
           <HeaderNav>
             <HeaderButton className="_hover01" onClick={() => onOpenPopup('newCard')}>
@@ -39,8 +52,13 @@ function Header({ onOpenPopup }) {
               <PopUserName>Ivan Ivanov</PopUserName>
               <PopUserMail>ivan.ivanov@gmail.com</PopUserMail>
               <PopUserTheme>
-                <p>Темная тема</p>
-                <ThemeCheckbox className="checkbox" name="checkbox" />
+                <div>Темная тема</div>
+                <ThemeCheckbox 
+                  className="checkbox" 
+                  name="checkbox" 
+                  checked={isDarkTheme}
+                  onChange={handleThemeToggle}
+                />
               </PopUserTheme>
               <PopUserButton type="button" className="_hover03" onClick={() => onOpenPopup('exit')}>
                 Выйти

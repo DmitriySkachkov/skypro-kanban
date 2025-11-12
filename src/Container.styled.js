@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { theme } from './theme';
 
 export const StyledContainer = styled.div`
   max-width: 1260px;
@@ -7,7 +6,7 @@ export const StyledContainer = styled.div`
   margin: 0 auto;
   padding: 0 30px;
 
-  @media screen and (max-width: ${theme.breakpoints.tablet}) {
+  @media screen and (max-width: 495px) {
     padding: 0 16px;
   }
 `;

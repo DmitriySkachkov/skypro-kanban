@@ -44,7 +44,7 @@ function PopupBrowse({ isOpen, onClose }) {
           <PopupBrowseTopBlock>
             <PopupBrowseTitle>Название задачи</PopupBrowseTitle>
             <CategoriesTheme className="theme-top" $color="orange" $active>
-              <p>Web Design</p>
+              <div>Web Design</div>
             </CategoriesTheme>
           </PopupBrowseTopBlock>
           
@@ -54,19 +54,19 @@ function PopupBrowse({ isOpen, onClose }) {
             </StatusText>
             <StatusThemes>
               <StatusTheme $hide>
-                <p>Без статуса</p>
+                <div>Без статуса</div>
               </StatusTheme>
               <StatusTheme $gray>
-                <p>Нужно сделать</p>
+                <div>Нужно сделать</div>
               </StatusTheme>
               <StatusTheme $hide>
-                <p>В работе</p>
+                <div>В работе</div>
               </StatusTheme>
               <StatusTheme $hide>
-                <p>Тестирование</p>
+                <div>Тестирование</div>
               </StatusTheme>
               <StatusTheme $hide>
-                <p>Готово</p>
+                <div>Готово</div>
               </StatusTheme>
             </StatusThemes>
           </Status>
@@ -158,7 +158,7 @@ function PopupBrowse({ isOpen, onClose }) {
             </CategoriesText>
             <CategoriesThemes>
               <CategoriesTheme $color="orange" $active>
-                <p>Web Design</p>
+                <div>Web Design</div>
               </CategoriesTheme>
             </CategoriesThemes>
           </Categories>

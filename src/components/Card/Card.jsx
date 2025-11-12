@@ -27,10 +27,10 @@ function Card({ title, topic, date }) {
 
   return (
     <CardItem className="cards__item">
-      <CardContainer className="card">
+      <CardContainer className="cards__card card">
         <CardGroup className="card__group">
           <CardTheme $theme={theme} className="card__theme">
-            <p>{topic}</p>
+            <div>{topic}</div>
           </CardTheme>
           <CardButton className="card__btn">
             <div></div>
@@ -52,7 +52,7 @@ function Card({ title, topic, date }) {
                 </clipPath>
               </defs>
             </svg>
-            <p>{date}</p>
+            <div>{date}</div>
           </CardDate>
         </CardContent>
       </CardContainer>

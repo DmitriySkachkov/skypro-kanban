@@ -1,10 +1,10 @@
 import { 
   PopupExitOverlay, 
   PopupExitBlock, 
-  PopupTitle, 
-  PopupForm, 
+  PopupExitTitle, 
+  PopupExitForm, 
   PopupExitFormGroup, 
-  PopupButton 
+  PopupExitButton 
 } from './PopupExit.styled';
 
 function PopupExit({ isOpen, onClose }) {
@@ -16,17 +16,17 @@ function PopupExit({ isOpen, onClose }) {
   return (
     <PopupExitOverlay className="pop-exit" $isOpen={isOpen}>
       <PopupExitBlock>
-        <PopupTitle>Выйти из аккаунта?</PopupTitle>
-        <PopupForm id="formExit" action="#">
+        <PopupExitTitle>Выйти из аккаунта?</PopupExitTitle>
+        <PopupExitForm id="formExit" action="#">
           <PopupExitFormGroup>
-            <PopupButton $variant="primary" id="exitYes">
+            <PopupExitButton $variant="primary" id="exitYes">
               Да, выйти
-            </PopupButton>
-            <PopupButton $variant="secondary" id="exitNo" onClick={handleNoClick}>
+            </PopupExitButton>
+            <PopupExitButton $variant="secondary" id="exitNo" onClick={handleNoClick}>
               Нет, остаться
-            </PopupButton>
+            </PopupExitButton>
           </PopupExitFormGroup>
-        </PopupForm>
+        </PopupExitForm>
       </PopupExitBlock>
     </PopupExitOverlay>
   );

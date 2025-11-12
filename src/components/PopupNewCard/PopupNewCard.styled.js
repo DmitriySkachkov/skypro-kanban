@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { PopupOverlay, PopupBlock } from '../Popup/Popup.styled';
-import { theme } from '../../../common/theme';
+import { theme } from '../../theme';
 
 export const PopupNewCardOverlay = styled(PopupOverlay).attrs({ $zIndex: 6 })`
   @media screen and (max-width: ${theme.breakpoints.laptop}) {
@@ -357,7 +357,7 @@ export const CategoriesTheme = styled.div`
     }
   }};
 
-  & p {
+  & div {
     font-size: 14px;
     font-weight: 600;
     line-height: 14px;

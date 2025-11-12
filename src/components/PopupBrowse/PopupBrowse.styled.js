@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { PopupOverlay, PopupBlock } from '../Popup/Popup.styled';
-import { theme } from '../../../common/theme';
+import { theme } from '../../theme';
 
 export const PopupBrowseOverlay = styled(PopupOverlay).attrs({ $zIndex: 7 })`
   @media screen and (max-width: ${theme.breakpoints.laptop}) {
@@ -120,6 +120,178 @@ export const FormBrowseArea = styled.textarea`
   }
 `;
 
+export const Subtitle = styled.p`
+  color: ${theme.colors.textPrimary};
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+`;
+
+export const Calendar = styled.div`
+  max-width: 182px;
+  margin-bottom: 20px;
+
+  @media screen and (max-width: ${theme.breakpoints.laptop}) {
+    max-width: 100%;
+  }
+`;
+
+export const CalendarTitle = styled.div`
+  margin-bottom: 14px;
+`;
+
+export const CalendarText = styled.p`
+  color: ${theme.colors.textPrimary};
+  font-size: 10px;
+  line-height: 1;
+`;
+
+export const CalendarBlock = styled.div`
+  display: block;
+`;
+
+export const CalendarMonth = styled.span`
+  color: ${theme.colors.textPrimary};
+  font-size: 14px;
+  line-height: 25px;
+  font-weight: 600;
+`;
+
+export const CalendarContent = styled.div`
+  margin-bottom: 12px;
+`;
+
+export const CalendarDaysNames = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 7px;
+  padding: 0 7px;
+`;
+
+export const CalendarDayName = styled.span`
+  color: ${theme.colors.textSecondary};
+  font-size: 10px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.2px;
+  text-transform: uppercase;
+  width: 22px;
+  text-align: center;
+`;
+
+export const CalendarCells = styled.div`
+  width: 182px;
+  height: 126px;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+export const CalendarCell = styled.span`
+  width: 22px;
+  height: 22px;
+  margin: 2px;
+  border-radius: 50%;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  color: ${theme.colors.textPrimary};
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: -0.2px;
+  cursor: pointer;
+
+  ${props => props.$otherMonth && `
+    opacity: 0;
+  `}
+
+  ${props => props.$isDay && `
+    opacity: 1;
+  `}
+
+  ${props => props.$current && `
+    background-color: ${theme.colors.primary};
+    color: ${theme.colors.white};
+  `}
+
+  ${props => props.$active && `
+    background-color: ${theme.colors.orange.background};
+    color: ${theme.colors.orange.text};
+  `}
+`;
+
+export const CalendarNav = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+`;
+
+export const CalendarPeriod = styled.div`
+  padding: 0 7px;
+`;
+
+export const NavActions = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const NavAction = styled.button`
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: ${theme.colors.primary};
+  font-size: 16px;
+  cursor: pointer;
+`;
+
+export const Categories = styled.div`
+  margin-bottom: 11px;
+`;
+
+export const CategoriesText = styled.p`
+  margin-bottom: 14px;
+`;
+
+export const CategoriesThemes = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+`;
+
+export const CategoriesTheme = styled.div`
+  border-radius: 24px;
+  border: 0.7px solid ${theme.colors.borderLight};
+  color: ${props => props.$color === 'orange' ? theme.colors.orange.text : 
+                    props.$color === 'green' ? theme.colors.green.text : 
+                    theme.colors.purple.text};
+  background-color: ${props => props.$color === 'orange' ? theme.colors.orange.background : 
+                            props.$color === 'green' ? theme.colors.green.background : 
+                            theme.colors.purple.background};
+  padding: 11px 14px 10px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+
+  & div {
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: -0.14px;
+  }
+
+  ${props => props.$active && `
+    opacity: 1;
+  `}
+`;
+
 export const Status = styled.div`
   margin-bottom: 11px;
 `;
@@ -143,7 +315,7 @@ export const StatusTheme = styled.div`
   margin-right: 7px;
   margin-bottom: 7px;
 
-  & p {
+  & div {
     font-size: 14px;
     line-height: 1;
     letter-spacing: -0.14px;

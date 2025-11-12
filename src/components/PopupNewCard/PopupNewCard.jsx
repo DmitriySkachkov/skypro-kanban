@@ -162,21 +162,21 @@ function PopupNewCard({ isOpen, onClose }) {
                 $active={selectedCategory === 'orange'}
                 onClick={() => handleCategoryClick('orange')}
               >
-                <p>Web Design</p>
+                <div>Web Design</div>
               </CategoriesTheme>
               <CategoriesTheme 
                 $color="green"
                 $active={selectedCategory === 'green'}
                 onClick={() => handleCategoryClick('green')}
               >
-                <p>Research</p>
+                <div>Research</div>
               </CategoriesTheme>
               <CategoriesTheme 
                 $color="purple"
                 $active={selectedCategory === 'purple'}
                 onClick={() => handleCategoryClick('purple')}
               >
-                <p>Copywriting</p>
+                <div>Copywriting</div>
               </CategoriesTheme>
             </CategoriesThemes>
           </Categories>

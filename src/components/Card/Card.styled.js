@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme } from '../../../common/theme';
+import { theme } from '../../theme';
 
 export const CardItem = styled.div`
   padding: 5px;
@@ -57,7 +57,7 @@ export const CardTheme = styled.div`
     }
   }};
 
-  & p {
+  & div {
     font-size: 10px;
     font-weight: 600;
     line-height: 10px;
@@ -106,7 +106,7 @@ export const CardDate = styled.div`
     width: 13px;
   }
 
-  & p {
+  & div {
     margin-left: 6px;
     font-size: 10px;
     line-height: 13px;
