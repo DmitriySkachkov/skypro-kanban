@@ -1,9 +1,11 @@
+import { LoadingContainer, LoadingText } from './Loading.styled';
+
 function Loading() {
   return (
-    <div className="loading">
-      <p>Данные загружаются...</p>
-    </div>
-  )
+    <LoadingContainer className="loading">
+      <LoadingText>Данные загружаются...</LoadingText>
+    </LoadingContainer>
+  );
 }
 
-export default Loading
+export default Loading;

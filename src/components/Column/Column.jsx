@@ -1,23 +1,23 @@
-import Card from '../Card/Card'
+import Card from '../Card/Card';
+import { ColumnContainer, ColumnTitle, CardsContainer } from './Column.styled';
 
-function Column({ title, cards = [] }) {
+function Column({ title, cards = [], onCardClick }) {
   return (
-    <div className="main__column column">
-      <div className="column__title">
+    <ColumnContainer className="column">
+      <ColumnTitle>
         <p>{title}</p>
-      </div>
-      <div className="cards">
+      </ColumnTitle>
+      <CardsContainer className="cards">
         {cards.map(card => (
           <Card 
             key={card.id}
-            title={card.title}
-            topic={card.topic}
-            date={card.date}
+            card={card}
+            onCardClick={onCardClick}
           />
         ))}
-      </div>
-    </div>
-  )
+      </CardsContainer>
+    </ColumnContainer>
+  );
 }
 
-export default Column
+export default Column;

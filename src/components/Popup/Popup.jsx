@@ -1,15 +1,25 @@
-import PopupExit from '../PopupExit/PopupExit'
-import PopupNewCard from '../PopupNewCard/PopupNewCard'
-import PopupBrowse from '../PopupBrowse/PopupBrowse'
+import PopupExit from '../PopupExit/PopupExit';
+import PopupNewCard from '../PopupNewCard/PopupNewCard';
+import PopupBrowse from '../PopupBrowse/PopupBrowse';
 
-function Popup() {
+function Popup({ activePopup, onClosePopup, selectedCard }) {
   return (
     <div className="pop-wrap">
-      <PopupExit />
-      <PopupNewCard />
-      <PopupBrowse />
+      <PopupExit 
+        isOpen={activePopup === 'exit'} 
+        onClose={onClosePopup} 
+      />
+      <PopupNewCard 
+        isOpen={activePopup === 'newCard'} 
+        onClose={onClosePopup} 
+      />
+      <PopupBrowse 
+        isOpen={activePopup === 'browse'} 
+        onClose={onClosePopup}
+        cardData={selectedCard}
+      />
     </div>
-  )
+  );
 }
 
-export default Popup
+export default Popup;
