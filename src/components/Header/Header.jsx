@@ -1,53 +1,74 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import { StyledContainer } from '../../Container.styled';
+import {
+  StyledHeader,
+  HeaderBlock,
+  HeaderLogo,
+  HeaderNav,
+  HeaderButton,
+  HeaderUser,
+  PopUserSet,
+  PopUserName,
+  PopUserMail,
+  PopUserTheme,
+  ThemeCheckbox,
+  PopUserButton
+} from './Header.styled';
 
-function Header() {
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
+function Header({ onOpenPopup }) {
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
 
-  const toggleUserMenu = () => {
-    setIsUserMenuOpen(!isUserMenuOpen)
-  }
+  const handleThemeToggle = () => {
+    setIsDarkTheme(!isDarkTheme);
+  };
 
   return (
-    <header className="header">
-      <div className="container">
-        <div className="header__block">
-          <div className="header__logo _show _light">
-            <a href="#" target="_self"><img src="/public/logo.png" alt="logo" /></a>
-          </div>
-          <div className="header__logo _dark">
-            <a href="#" target="_self"><img src="/public/logo_dark.png" alt="logo" /></a>
-          </div>
-          <nav className="header__nav">
-            <button className="header__btn-main-new _hover01" id="btnMainNew">
-              <a href="#popNewCard">Создать новую задачу</a>
-            </button>
-            <a 
-              href="#user-set-target" 
-              className="header__user _hover02"
-              onClick={toggleUserMenu}
+    <StyledHeader>
+      <StyledContainer>
+        <HeaderBlock>
+          <HeaderLogo>
+            {isDarkTheme ? (
+              <a href="#" target="_self">
+                <img src="/logo_dark.png" alt="logo" />
+              </a>
+            ) : (
+              <a href="#" target="_self">
+                <img src="/logo.png" alt="logo" />
+              </a>
+            )}
+          </HeaderLogo>
+          <HeaderNav>
+            <HeaderButton className="_hover01" onClick={() => onOpenPopup('newCard')}>
+              Создать новую задачу
+            </HeaderButton>
+            <HeaderUser 
+              className="_hover02"
+              onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
             >
               Ivan Ivanov
-            </a>
-            <div 
-              className={`header__pop-user-set pop-user-set ${isUserMenuOpen ? 'active' : ''}`}
-              id="user-set-target"
-              style={{ display: isUserMenuOpen ? 'block' : 'none' }}
-            >
-              <p className="pop-user-set__name">Ivan Ivanov</p>
-              <p className="pop-user-set__mail">ivan.ivanov@gmail.com</p>
-              <div className="pop-user-set__theme">
-                <p>Темная тема</p>
-                <input type="checkbox" className="checkbox" name="checkbox" />
-              </div>
-              <button type="button" className="_hover03">
-                <a href="#popExit">Выйти</a>
-              </button>
-            </div>
-          </nav>					
-        </div>
-      </div>			
-    </header>
-  )
+            </HeaderUser>
+            <PopUserSet $isOpen={isUserMenuOpen}>
+              <PopUserName>Ivan Ivanov</PopUserName>
+              <PopUserMail>ivan.ivanov@gmail.com</PopUserMail>
+              <PopUserTheme>
+                <div>Темная тема</div>
+                <ThemeCheckbox 
+                  className="checkbox" 
+                  name="checkbox" 
+                  checked={isDarkTheme}
+                  onChange={handleThemeToggle}
+                />
+              </PopUserTheme>
+              <PopUserButton type="button" className="_hover03" onClick={() => onOpenPopup('exit')}>
+                Выйти
+              </PopUserButton>
+            </PopUserSet>
+          </HeaderNav>					
+        </HeaderBlock>
+      </StyledContainer>
+    </StyledHeader>
+  );
 }
 
-export default Header
+export default Header;
