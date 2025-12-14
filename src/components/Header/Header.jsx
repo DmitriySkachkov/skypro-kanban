@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../useAuth';
 import { StyledContainer } from '../../Container.styled';
 import {
   StyledHeader,
@@ -18,19 +19,17 @@ import {
 
 function Header() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const { isAuth, logout } = useAuth(); // Используем хук
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    localStorage.setItem('isAuth', 'true');
-    navigate('/');
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('isAuth');
+  const handleLoginClick = () => {
     navigate('/login');
   };
 
-  const isAuth = localStorage.getItem('isAuth');
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   if (!isAuth) {
     return (
@@ -43,7 +42,7 @@ function Header() {
               </a>
             </HeaderLogo>
             <HeaderNav>
-              <HeaderButton className="_hover01" onClick={handleLogin}>
+              <HeaderButton className="_hover01" onClick={handleLoginClick}>
                 Войти
               </HeaderButton>
             </HeaderNav>
