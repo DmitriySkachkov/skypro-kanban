@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../useAuth';
 import { 
   PopupExitOverlay, 
   PopupExitBlock, 
@@ -8,6 +10,16 @@ import {
 } from './PopupExit.styled';
 
 function PopupExit({ isOpen, onClose }) {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleYesClick = (e) => {
+    e.preventDefault();
+    logout();
+    onClose();
+    navigate('/login');
+  };
+
   const handleNoClick = (e) => {
     e.preventDefault();
     onClose();
@@ -19,10 +31,18 @@ function PopupExit({ isOpen, onClose }) {
         <PopupExitTitle>Выйти из аккаунта?</PopupExitTitle>
         <PopupExitForm id="formExit" action="#">
           <PopupExitFormGroup>
-            <PopupExitButton $variant="primary" id="exitYes">
+            <PopupExitButton 
+              $variant="primary" 
+              id="exitYes" 
+              onClick={handleYesClick}
+            >
               Да, выйти
             </PopupExitButton>
-            <PopupExitButton $variant="secondary" id="exitNo" onClick={handleNoClick}>
+            <PopupExitButton 
+              $variant="secondary" 
+              id="exitNo" 
+              onClick={handleNoClick}
+            >
               Нет, остаться
             </PopupExitButton>
           </PopupExitFormGroup>

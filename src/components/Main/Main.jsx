@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../useAuth';
 import { StyledContainer } from '../../Container.styled';
 import Column from '../Column/Column';
 import Loading from '../Loading/Loading';
@@ -6,8 +8,16 @@ import { statuses } from '../../data';
 import { StyledMain, MainBlock, MainContent } from './Main.styled';
 
 function Main({ onOpenPopup }) {
+  const { isAuth } = useAuth();
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuth) {
+      navigate('/login');
+    }
+  }, [isAuth, navigate]);
 
   useEffect(() => {
     const loadCards = async () => {
@@ -22,8 +32,10 @@ function Main({ onOpenPopup }) {
       }
     };
 
-    loadCards();
-  }, []);
+    if (isAuth) {
+      loadCards();
+    }
+  }, [isAuth]);
 
   const getCardsByStatus = (status) => {
     return cards.filter(card => card.status === status);
@@ -32,6 +44,10 @@ function Main({ onOpenPopup }) {
   const handleCardClick = (card) => {
     onOpenPopup('browse', card);
   };
+
+  if (!isAuth) {
+    return null;
+  }
 
   return (
     <StyledMain>

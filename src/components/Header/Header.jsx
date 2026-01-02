@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../useAuth';
 import { StyledContainer } from '../../Container.styled';
 import {
   StyledHeader,
@@ -17,29 +19,50 @@ import {
 
 function Header({ onOpenPopup }) {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const { isAuth } = useAuth();
+  const navigate = useNavigate();
 
-  const handleThemeToggle = () => {
-    setIsDarkTheme(!isDarkTheme);
+  const handleLoginClick = () => {
+    navigate('/login');
   };
+
+  const handleLogoutClick = () => {
+    onOpenPopup('exit');
+    setIsUserMenuOpen(false);
+  };
+
+  if (!isAuth) {
+    return (
+      <StyledHeader>
+        <StyledContainer>
+          <HeaderBlock>
+            <HeaderLogo>
+              <a href="#" target="_self">
+                <img src="/logo.png" alt="logo" />
+              </a>
+            </HeaderLogo>
+            <HeaderNav>
+              <HeaderButton className="_hover01" onClick={handleLoginClick}>
+                Войти
+              </HeaderButton>
+            </HeaderNav>
+          </HeaderBlock>
+        </StyledContainer>
+      </StyledHeader>
+    );
+  }
 
   return (
     <StyledHeader>
       <StyledContainer>
         <HeaderBlock>
           <HeaderLogo>
-            {isDarkTheme ? (
-              <a href="#" target="_self">
-                <img src="/logo_dark.png" alt="logo" />
-              </a>
-            ) : (
-              <a href="#" target="_self">
-                <img src="/logo.png" alt="logo" />
-              </a>
-            )}
+            <a href="#" target="_self">
+              <img src="/logo.png" alt="logo" />
+            </a>
           </HeaderLogo>
           <HeaderNav>
-            <HeaderButton className="_hover01" onClick={() => onOpenPopup('newCard')}>
+            <HeaderButton className="_hover01" onClick={() => navigate('/add-task')}>
               Создать новую задачу
             </HeaderButton>
             <HeaderUser 
@@ -53,14 +76,13 @@ function Header({ onOpenPopup }) {
               <PopUserMail>ivan.ivanov@gmail.com</PopUserMail>
               <PopUserTheme>
                 <div>Темная тема</div>
-                <ThemeCheckbox 
-                  className="checkbox" 
-                  name="checkbox" 
-                  checked={isDarkTheme}
-                  onChange={handleThemeToggle}
-                />
+                <ThemeCheckbox className="checkbox" name="checkbox" />
               </PopUserTheme>
-              <PopUserButton type="button" className="_hover03" onClick={() => onOpenPopup('exit')}>
+              <PopUserButton 
+                type="button" 
+                className="_hover03" 
+                onClick={handleLogoutClick} // Изменяем обработчик
+              >
                 Выйти
               </PopUserButton>
             </PopUserSet>
