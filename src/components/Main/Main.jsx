@@ -1,52 +1,74 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../useAuth';
+import { getTasks } from '../../services/tasks-api';
 import { StyledContainer } from '../../Container.styled';
 import Column from '../Column/Column';
 import Loading from '../Loading/Loading';
 import { statuses } from '../../data';
-import { StyledMain, MainBlock, MainContent } from './Main.styled';
+import { StyledMain, MainBlock, MainContent, ErrorBlock } from './Main.styled';
 
 function Main({ onOpenPopup }) {
-  const { isAuth } = useAuth();
-  const [cards, setCards] = useState([]);
+  const { isAuth, isLoading: authLoading } = useAuth();
+  const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isAuth) {
+    if (!authLoading && !isAuth) {
       navigate('/login');
     }
-  }, [isAuth, navigate]);
+  }, [isAuth, authLoading, navigate]);  
+
+  const loadTasks = async () => {
+    try {
+      setIsLoading(true);
+      setError('');
+      const data = await getTasks();
+      setTasks(data.tasks || []);
+    } catch (error) {
+      console.error('Failed to load tasks:', error);
+      setError('Не удалось загрузить задачи. Попробуйте обновить страницу.');
+      setTasks([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const loadCards = async () => {
-      try {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        const { cardsData } = await import('../../data');
-        setCards(cardsData);
-      } catch (error) {
-        console.error('Ошибка загрузки данных:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     if (isAuth) {
-      loadCards();
+      loadTasks();
     }
   }, [isAuth]);
 
-  const getCardsByStatus = (status) => {
-    return cards.filter(card => card.status === status);
+  const getTasksByStatus = (status) => {
+    return tasks.filter(task => task.status === status);
   };
 
   const handleCardClick = (card) => {
     onOpenPopup('browse', card);
   };
 
-  if (!isAuth) {
-    return null;
+  const handleRefresh = () => {
+    loadTasks();
+  };
+
+  if (!isAuth || authLoading) {
+    return <Loading />;
+  }
+
+  if (error && !isLoading) {
+    return (
+      <StyledMain>
+        <StyledContainer>
+          <ErrorBlock>
+            <p>{error}</p>
+            <button onClick={handleRefresh}>Обновить</button>
+          </ErrorBlock>
+        </StyledContainer>
+      </StyledMain>
+    );
   }
 
   return (
@@ -61,7 +83,7 @@ function Main({ onOpenPopup }) {
                 <Column 
                   key={index} 
                   title={status}
-                  cards={getCardsByStatus(status)}
+                  cards={getTasksByStatus(status)}
                   onCardClick={handleCardClick}
                 />
               ))}
