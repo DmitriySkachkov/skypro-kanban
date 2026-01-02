@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../useAuth';
 import {
   LoginPageContainer,
@@ -7,24 +7,55 @@ import {
   LoginLogo,
   LoginInput,
   LoginButton,
-  LoginLink
+  LoginLink,
+  ErrorMessage,
+  FormTitle
 } from './LoginPage.styled';
 
 function LoginPage() {
-  const [email, setEmail] = useState('');
+  const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useAuth();
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const { login: authLogin } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    login();
-    navigate('/');
+  const validateForm = () => {
+    if (!login.trim()) {
+      setError('Введите логин');
+      return false;
+    }
+    if (!password.trim()) {
+      setError('Введите пароль');
+      return false;
+    }
+    if (password.length < 3) {
+      setError('Пароль должен содержать минимум 3 символа');
+      return false;
+    }
+    return true;
   };
 
-  const handleRegisterClick = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/register');
+    setError('');
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
+    
+    const result = await authLogin({ login, password });
+    
+    if (result.success) {
+      navigate('/');
+    } else {
+      setError(result.error || 'Неверный логин или пароль');
+    }
+    
+    setIsLoading(false);
   };
 
   return (
@@ -34,26 +65,40 @@ function LoginPage() {
           <img src="/logo.png" alt="Skypro Kanban" />
         </LoginLogo>
         
+        <FormTitle>Вход в систему</FormTitle>
+        
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+        
         <LoginInput
-          type="email"
-          placeholder="Эл. почта"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          placeholder="Логин"
+          value={login}
+          onChange={(e) => {
+            setLogin(e.target.value);
+            setError('');
+          }}
+          disabled={isLoading}
+          required
         />
         
         <LoginInput
           type="password"
           placeholder="Пароль"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setError('');
+          }}
+          disabled={isLoading}
+          required
         />
         
-        <LoginButton type="submit">
-          Войти
+        <LoginButton type="submit" disabled={isLoading}>
+          {isLoading ? 'Загрузка...' : 'Войти'}
         </LoginButton>
         
-        <LoginLink href="#" onClick={handleRegisterClick}>
-          Зарегистрироваться
+        <LoginLink as={Link} to="/register">
+          Ещё нет аккаунта? Зарегистрироваться
         </LoginLink>
       </LoginForm>
     </LoginPageContainer>

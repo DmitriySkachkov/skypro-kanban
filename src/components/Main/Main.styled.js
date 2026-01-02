@@ -26,3 +26,31 @@ export const MainContent = styled.div`
     padding-bottom: 20px;
   }
 `;
+
+export const ErrorBlock = styled.div`
+  text-align: center;
+  padding: 40px;
+  background-color: ${theme.colors.white};
+  border-radius: 10px;
+  box-shadow: ${theme.colors.shadow};
+  
+  p {
+    color: ${theme.colors.textPrimary};
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: ${theme.colors.primary};
+    color: ${theme.colors.white};
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    
+    &:hover {
+      background-color: ${theme.colors.primaryHover};
+    }
+  }
+`;
