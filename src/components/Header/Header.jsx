@@ -17,18 +17,18 @@ import {
   PopUserButton
 } from './Header.styled';
 
-function Header() {
+function Header({ onOpenPopup }) {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const { isAuth, logout } = useAuth(); // Используем хук
+  const { isAuth } = useAuth();
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
     navigate('/login');
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
+  const handleLogoutClick = () => {
+    onOpenPopup('exit');
+    setIsUserMenuOpen(false);
   };
 
   if (!isAuth) {
@@ -78,7 +78,11 @@ function Header() {
                 <div>Темная тема</div>
                 <ThemeCheckbox className="checkbox" name="checkbox" />
               </PopUserTheme>
-              <PopUserButton type="button" className="_hover03" onClick={handleLogout}>
+              <PopUserButton 
+                type="button" 
+                className="_hover03" 
+                onClick={handleLogoutClick} // Изменяем обработчик
+              >
                 Выйти
               </PopUserButton>
             </PopUserSet>

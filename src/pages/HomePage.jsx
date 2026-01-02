@@ -19,7 +19,7 @@ function HomePage() {
 
   return (
     <>
-      <Header />
+      <Header onOpenPopup={openPopup} /> {}
       <Main onOpenPopup={openPopup} />
       <Popup 
         activePopup={activePopup} 
