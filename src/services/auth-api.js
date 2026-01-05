@@ -10,7 +10,7 @@ export async function registerUser({ login, password, name }) {
 }
 
 export async function loginUser({ login, password }) {
-  const response = await makeRequest(`${API_BASE_URL}/login`, {
+  const response = await makeRequest(`${API_BASE_URL}/user/login`, {
     method: 'POST',
     body: JSON.stringify({ login, password }),
   });
