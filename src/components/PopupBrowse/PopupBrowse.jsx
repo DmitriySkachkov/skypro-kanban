@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useTasks } from '../../useTasks';
 import {
   PopupBrowseOverlay,
   PopupBrowseBlock,
@@ -9,20 +11,6 @@ import {
   FormBrowseBlock,
   FormBrowseArea,
   Subtitle,
-  Calendar,
-  CalendarTitle,
-  CalendarText,
-  CalendarBlock,
-  CalendarMonth,
-  CalendarContent,
-  CalendarDaysNames,
-  CalendarDayName,
-  CalendarCells,
-  CalendarCell,
-  CalendarNav,
-  CalendarPeriod,
-  NavActions,
-  NavAction,
   Categories,
   CategoriesText,
   CategoriesThemes,
@@ -31,16 +19,24 @@ import {
   StatusText,
   StatusThemes,
   StatusTheme,
-  PopupBrowseButtons
+  PopupBrowseButtons,
+  ErrorMessage
 } from './PopupBrowse.styled';
 
 function PopupBrowse({ isOpen, onClose, cardData }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedDescription, setEditedDescription] = useState('');
+  const [error, setError] = useState('');
+  
+  const { editTask, removeTask, isLoading } = useTasks();
+
   if (!isOpen) return null;
 
   const cardTitle = cardData?.title || 'Название задачи';
   const cardTopic = cardData?.topic || 'Web Design';
-  const cardDescription = cardData?.description || 'Описание задачи. Здесь будет отображаться текст описания выбранной карточки.';
-  const cardDate = cardData?.date || '30.10.23';
+  const cardDescription = cardData?.description || '';
+  const cardId = cardData?._id || cardData?.id;
+  const currentDescription = isEditing ? editedDescription : cardDescription;
 
   const getThemeColor = (topic) => {
     switch (topic) {
@@ -53,6 +49,54 @@ function PopupBrowse({ isOpen, onClose, cardData }) {
 
   const themeColor = getThemeColor(cardTopic);
 
+  const handleEditClick = () => {
+    setIsEditing(true);
+    setEditedDescription(cardDescription);
+  };
+
+  const handleSaveClick = async () => {
+    if (!cardId) return;
+    
+    try {
+      const result = await editTask(cardId, {
+        ...cardData,
+        description: editedDescription
+      });
+      
+      if (result.success) {
+        setIsEditing(false);
+        setError('');
+      } else {
+        setError(result.error);
+      }
+    } catch {
+      setError('Не удалось сохранить изменения');
+    }
+  };
+
+  const handleDeleteClick = async () => {
+    if (!cardId) return;
+    
+    if (window.confirm('Вы уверены, что хотите удалить эту задачу?')) {
+      try {
+        const result = await removeTask(cardId);
+        if (result.success) {
+          onClose();
+        } else {
+          setError(result.error);
+        }
+      } catch {
+        setError('Не удалось удалить задачу');
+      }
+    }
+  };
+
+  const handleCancelClick = () => {
+    setIsEditing(false);
+    setEditedDescription('');
+    setError('');
+  };
+
   return (
     <PopupBrowseOverlay className="pop-browse" $isOpen={isOpen}>
       <PopupBrowseBlock>
@@ -64,108 +108,29 @@ function PopupBrowse({ isOpen, onClose, cardData }) {
             </CategoriesTheme>
           </PopupBrowseTopBlock>
           
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+          
           <Status>
             <StatusText>
-              <Subtitle>Статус</Subtitle>
+              <Subtitle>Статус: {cardData?.status || 'Без статуса'}</Subtitle>
             </StatusText>
-            <StatusThemes>
-              <StatusTheme $hide>
-                <p>Без статуса</p>
-              </StatusTheme>
-              <StatusTheme $gray>
-                <p>Нужно сделать</p>
-              </StatusTheme>
-              <StatusTheme $hide>
-                <p>В работе</p>
-              </StatusTheme>
-              <StatusTheme $hide>
-                <p>Тестирование</p>
-              </StatusTheme>
-              <StatusTheme $hide>
-                <p>Готово</p>
-              </StatusTheme>
-            </StatusThemes>
           </Status>
           
           <PopupBrowseWrap>
-            <PopupBrowseForm id="formBrowseCard" action="#">
+            <PopupBrowseForm id="formBrowseCard">
               <FormBrowseBlock>
                 <Subtitle>Описание задачи</Subtitle>
                 <FormBrowseArea 
                   name="text" 
                   id="textArea01" 
-                  readOnly 
+                  readOnly={!isEditing}
                   placeholder="Введите описание задачи..."
-                  value={cardDescription}
+                  value={currentDescription}
+                  onChange={(e) => isEditing && setEditedDescription(e.target.value)}
+                  disabled={isLoading}
                 />
               </FormBrowseBlock>
             </PopupBrowseForm>
-            
-            <Calendar>
-              <CalendarTitle>
-                <Subtitle>Даты</Subtitle>
-              </CalendarTitle>
-              <CalendarBlock>
-                <CalendarNav>
-                  <CalendarPeriod>
-                    <CalendarText>
-                      Срок исполнения: <span className="date-control">{cardDate}</span>
-                    </CalendarText>
-                  </CalendarPeriod>
-                  <NavActions>
-                    <NavAction>‹</NavAction>
-                    <CalendarMonth>Сентябрь 2023</CalendarMonth>
-                    <NavAction>›</NavAction>
-                  </NavActions>
-                </CalendarNav>
-                <CalendarContent>
-                  <CalendarDaysNames>
-                    <CalendarDayName>пн</CalendarDayName>
-                    <CalendarDayName>вт</CalendarDayName>
-                    <CalendarDayName>ср</CalendarDayName>
-                    <CalendarDayName>чт</CalendarDayName>
-                    <CalendarDayName>пт</CalendarDayName>
-                    <CalendarDayName>сб</CalendarDayName>
-                    <CalendarDayName>вс</CalendarDayName>
-                  </CalendarDaysNames>
-                  <CalendarCells>
-                    <CalendarCell $otherMonth>28</CalendarCell>
-                    <CalendarCell $otherMonth>29</CalendarCell>
-                    <CalendarCell $otherMonth>30</CalendarCell>
-                    <CalendarCell $isDay>1</CalendarCell>
-                    <CalendarCell $isDay $current>2</CalendarCell>
-                    <CalendarCell $isDay $active>3</CalendarCell>
-                    <CalendarCell $isDay>4</CalendarCell>
-                    <CalendarCell $isDay>5</CalendarCell>
-                    <CalendarCell $isDay>6</CalendarCell>
-                    <CalendarCell $isDay>7</CalendarCell>
-                    <CalendarCell $isDay>8</CalendarCell>
-                    <CalendarCell $isDay>9</CalendarCell>
-                    <CalendarCell $isDay>10</CalendarCell>
-                    <CalendarCell $isDay>11</CalendarCell>
-                    <CalendarCell $isDay>12</CalendarCell>
-                    <CalendarCell $isDay>13</CalendarCell>
-                    <CalendarCell $isDay>14</CalendarCell>
-                    <CalendarCell $isDay>15</CalendarCell>
-                    <CalendarCell $isDay>16</CalendarCell>
-                    <CalendarCell $isDay>17</CalendarCell>
-                    <CalendarCell $isDay>18</CalendarCell>
-                    <CalendarCell $isDay>19</CalendarCell>
-                    <CalendarCell $isDay>20</CalendarCell>
-                    <CalendarCell $isDay>21</CalendarCell>
-                    <CalendarCell $isDay>22</CalendarCell>
-                    <CalendarCell $isDay>23</CalendarCell>
-                    <CalendarCell $isDay>24</CalendarCell>
-                    <CalendarCell $isDay>25</CalendarCell>
-                    <CalendarCell $isDay>26</CalendarCell>
-                    <CalendarCell $isDay>27</CalendarCell>
-                    <CalendarCell $isDay>28</CalendarCell>
-                    <CalendarCell $isDay>29</CalendarCell>
-                    <CalendarCell $isDay>30</CalendarCell>
-                  </CalendarCells>
-                </CalendarContent>
-              </CalendarBlock>
-            </Calendar>
           </PopupBrowseWrap>
           
           <Categories className="theme-down">
@@ -181,15 +146,28 @@ function PopupBrowse({ isOpen, onClose, cardData }) {
           
           <PopupBrowseButtons className="pop-browse__btn-browse">
             <div className="btn-group">
-              <button className="_btn-bor _hover03">
-                <a href="#">Редактировать задачу</a>
-              </button>
-              <button className="_btn-bor _hover03">
-                <a href="#">Удалить задачу</a>
-              </button>
+              {isEditing ? (
+                <>
+                  <button className="_btn-bg _hover01" onClick={handleSaveClick} disabled={isLoading}>
+                    Сохранить
+                  </button>
+                  <button className="_btn-bor _hover03" onClick={handleCancelClick} disabled={isLoading}>
+                    Отмена
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button className="_btn-bor _hover03" onClick={handleEditClick} disabled={isLoading}>
+                    Редактировать задачу
+                  </button>
+                  <button className="_btn-bor _hover03" onClick={handleDeleteClick} disabled={isLoading}>
+                    Удалить задачу
+                  </button>
+                </>
+              )}
             </div>
-            <button className="_btn-bg _hover01" onClick={onClose}>
-              <a href="#">Закрыть</a>
+            <button className="_btn-bg _hover01" onClick={onClose} disabled={isLoading}>
+              Закрыть
             </button>
           </PopupBrowseButtons>
         </PopupBrowseContent>

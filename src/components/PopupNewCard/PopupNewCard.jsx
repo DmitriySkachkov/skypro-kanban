@@ -1,17 +1,37 @@
 import { useState } from 'react';
-import { createTask } from '../../services/tasks-api';
+import { useTasks } from '../../useTasks';
 import {
-  // ... все импорты стилей
+  PopupNewCardOverlay,
+  PopupNewCardBlock,
+  PopupNewCardContent,
+  PopupNewCardTitle,
+  PopupNewCardClose,
+  PopupNewCardWrap,
+  PopupNewCardForm,
+  FormNewBlock,
+  FormNewInput,
+  FormNewArea,
+  FormNewCreate,
+  Subtitle,
+  Categories,
+  CategoriesText,
+  CategoriesThemes,
+  CategoriesTheme,
+  Status,
+  StatusText,
+  StatusThemes,
+  StatusTheme,
+  ErrorMessage
 } from './PopupNewCard.styled';
 
-function PopupNewCard({ isOpen, onClose, onTaskCreated }) {
+function PopupNewCard({ isOpen, onClose }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Research');
   const [selectedStatus, setSelectedStatus] = useState('Без статуса');
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString());
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  
+  const { addTask, isLoading } = useTasks();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,29 +42,21 @@ function PopupNewCard({ isOpen, onClose, onTaskCreated }) {
       return;
     }
 
-    setIsLoading(true);
+    const taskData = {
+      title: title.trim(),
+      topic: selectedCategory,
+      status: selectedStatus,
+      description: description.trim(),
+      date: new Date().toISOString(),
+    };
 
-    try {
-      const taskData = {
-        title: title.trim(),
-        topic: selectedCategory,
-        status: selectedStatus,
-        description: description.trim(),
-        date: selectedDate,
-      };
-
-      const result = await createTask(taskData);
-      
-      if (onTaskCreated) {
-        onTaskCreated(result.tasks);
-      }
-      
+    const result = await addTask(taskData);
+    
+    if (result.success) {
       resetForm();
       onClose();
-    } catch (error) {
-      setError(error.message || 'Не удалось создать задачу');
-    } finally {
-      setIsLoading(false);
+    } else {
+      setError(result.error);
     }
   };
 
@@ -53,7 +65,6 @@ function PopupNewCard({ isOpen, onClose, onTaskCreated }) {
     setDescription('');
     setSelectedCategory('Research');
     setSelectedStatus('Без статуса');
-    setSelectedDate(new Date().toISOString());
     setError('');
   };
 
@@ -72,13 +83,15 @@ function PopupNewCard({ isOpen, onClose, onTaskCreated }) {
       <PopupNewCardBlock>
         <PopupNewCardContent>
           <PopupNewCardTitle>Создание задачи</PopupNewCardTitle>
-          <PopupNewCardClose href="#" onClick={(e) => { e.preventDefault(); onClose(); resetForm(); }}>
+          <PopupNewCardClose href="#" onClick={(e) => { 
+            e.preventDefault(); 
+            onClose(); 
+            resetForm(); 
+          }}>
             ✖
           </PopupNewCardClose>
           
-          {error && (
-            <ErrorMessage>{error}</ErrorMessage>
-          )}
+          {error && <ErrorMessage>{error}</ErrorMessage>}
           
           <PopupNewCardWrap>
             <PopupNewCardForm id="formNewCard" onSubmit={handleSubmit}>
@@ -111,24 +124,24 @@ function PopupNewCard({ isOpen, onClose, onTaskCreated }) {
                   disabled={isLoading}
                 />
               </FormNewBlock>
-              
-              <FormNewBlock>
-                <Subtitle>Статус</Subtitle>
-                <StatusThemes>
-                  {['Без статуса', 'Нужно сделать', 'В работе', 'Тестирование', 'Готово'].map((status) => (
-                    <StatusTheme 
-                      key={status}
-                      $active={selectedStatus === status}
-                      onClick={() => !isLoading && handleStatusClick(status)}
-                    >
-                      {status}
-                    </StatusTheme>
-                  ))}
-                </StatusThemes>
-              </FormNewBlock>
             </PopupNewCardForm>
             
-            {/* Календарь и категории остаются без изменений */}
+            <Status>
+              <StatusText>
+                <Subtitle>Статус</Subtitle>
+              </StatusText>
+              <StatusThemes>
+                {['Без статуса', 'Нужно сделать', 'В работе', 'Тестирование', 'Готово'].map((status) => (
+                  <StatusTheme 
+                    key={status}
+                    $active={selectedStatus === status}
+                    onClick={() => !isLoading && handleStatusClick(status)}
+                  >
+                    <div>{status}</div>
+                  </StatusTheme>
+                ))}
+              </StatusThemes>
+            </Status>
           </PopupNewCardWrap>
           
           <Categories>

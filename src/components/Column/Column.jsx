@@ -10,7 +10,7 @@ function Column({ title, cards = [], onCardClick }) {
       <CardsContainer className="cards">
         {cards.map(card => (
           <Card 
-            key={card.id}
+            key={card._id || card.id}
             card={card}
             onCardClick={onCardClick}
           />
