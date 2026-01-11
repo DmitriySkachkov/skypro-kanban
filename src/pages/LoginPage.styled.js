@@ -23,11 +23,19 @@ export const LoginForm = styled.form`
 `;
 
 export const LoginLogo = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   
   & img {
     width: 120px;
   }
+`;
+
+export const FormTitle = styled.h2`
+  color: ${theme.colors.textPrimary};
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-align: center;
 `;
 
 export const LoginInput = styled.input`
@@ -41,6 +49,7 @@ export const LoginInput = styled.input`
   font-size: 14px;
   color: ${theme.colors.textPrimary};
   outline: none;
+  transition: border-color 0.2s ease;
   
   &::placeholder {
     color: ${theme.colors.textSecondary};
@@ -48,6 +57,11 @@ export const LoginInput = styled.input`
   
   &:focus {
     border-color: ${theme.colors.primary};
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 `;
 
@@ -64,8 +78,13 @@ export const LoginButton = styled.button`
   transition: background-color 0.2s ease;
   margin-bottom: 20px;
   
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: ${theme.colors.primaryHover};
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 `;
 
@@ -79,4 +98,15 @@ export const LoginLink = styled.a`
   &:hover {
     color: ${theme.colors.primaryHover};
   }
+`;
+
+export const ErrorMessage = styled.div`
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  background-color: #ffeaea;
+  color: #d32f2f;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
 `;

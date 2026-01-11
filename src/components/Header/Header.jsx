@@ -19,7 +19,7 @@ import {
 
 function Header({ onOpenPopup }) {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const { isAuth } = useAuth();
+  const { isAuth, user } = useAuth(); 
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
@@ -62,18 +62,18 @@ function Header({ onOpenPopup }) {
             </a>
           </HeaderLogo>
           <HeaderNav>
-            <HeaderButton className="_hover01" onClick={() => navigate('/add-task')}>
+            <HeaderButton className="_hover01" onClick={() => onOpenPopup('newCard')}>
               Создать новую задачу
             </HeaderButton>
             <HeaderUser 
               className="_hover02"
               onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
             >
-              Ivan Ivanov
+              {user?.name || 'Пользователь'}
             </HeaderUser>
             <PopUserSet $isOpen={isUserMenuOpen}>
-              <PopUserName>Ivan Ivanov</PopUserName>
-              <PopUserMail>ivan.ivanov@gmail.com</PopUserMail>
+              <PopUserName>{user?.name || 'Пользователь'}</PopUserName>
+              <PopUserMail>{user?.login || 'user@example.com'}</PopUserMail>
               <PopUserTheme>
                 <div>Темная тема</div>
                 <ThemeCheckbox className="checkbox" name="checkbox" />
@@ -81,7 +81,7 @@ function Header({ onOpenPopup }) {
               <PopUserButton 
                 type="button" 
                 className="_hover03" 
-                onClick={handleLogoutClick} // Изменяем обработчик
+                onClick={handleLogoutClick}
               >
                 Выйти
               </PopUserButton>
