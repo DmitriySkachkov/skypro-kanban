@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import AuthContext from './auth-context';
 import { loginUser, registerUser, getCurrentUser } from './services/auth-api';
 
@@ -7,11 +7,8 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
+  // Проверка авторизации при загрузке
+  const checkAuth = useCallback(async () => {
     try {
       const userData = await getCurrentUser();
       if (userData) {
@@ -23,9 +20,10 @@ export default function AuthProvider({ children }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const login = async ({ login, password }) => {
+  // Вход
+  const login = useCallback(async ({ login, password }) => {
     try {
       setIsLoading(true);
       const response = await loginUser({ login, password });
@@ -41,9 +39,10 @@ export default function AuthProvider({ children }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const register = async ({ login, password, name }) => {
+  // Регистрация
+  const register = useCallback(async ({ login, password, name }) => {
     try {
       setIsLoading(true);
       const response = await registerUser({ login, password, name });
@@ -56,14 +55,15 @@ export default function AuthProvider({ children }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const logout = () => {
+  // Выход
+  const logout = useCallback(() => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setIsAuth(false);
     setUser(null);
-  };
+  }, []);
 
   const value = {
     isAuth,

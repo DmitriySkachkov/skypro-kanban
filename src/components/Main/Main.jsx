@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../useAuth';
-import { getTasks } from '../../services/tasks-api';
+import { useTasks } from '../../useTasks';
 import { StyledContainer } from '../../Container.styled';
 import Column from '../Column/Column';
 import Loading from '../Loading/Loading';
@@ -10,41 +10,20 @@ import { StyledMain, MainBlock, MainContent, ErrorBlock } from './Main.styled';
 
 function Main({ onOpenPopup }) {
   const { isAuth, isLoading: authLoading } = useAuth();
-  const [tasks, setTasks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
+  const { 
+    isLoading: tasksLoading, 
+    error, 
+    getTasksByStatus,
+    loadTasks 
+  } = useTasks();
+  
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!authLoading && !isAuth) {
       navigate('/login');
     }
-  }, [isAuth, authLoading, navigate]);  
-
-  const loadTasks = async () => {
-    try {
-      setIsLoading(true);
-      setError('');
-      const data = await getTasks();
-      setTasks(data.tasks || []);
-    } catch (error) {
-      console.error('Failed to load tasks:', error);
-      setError('Не удалось загрузить задачи. Попробуйте обновить страницу.');
-      setTasks([]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (isAuth) {
-      loadTasks();
-    }
-  }, [isAuth]);
-
-  const getTasksByStatus = (status) => {
-    return tasks.filter(task => task.status === status);
-  };
+  }, [isAuth, authLoading, navigate]);
 
   const handleCardClick = (card) => {
     onOpenPopup('browse', card);
@@ -58,7 +37,7 @@ function Main({ onOpenPopup }) {
     return <Loading />;
   }
 
-  if (error && !isLoading) {
+  if (error && !tasksLoading) {
     return (
       <StyledMain>
         <StyledContainer>
@@ -75,7 +54,7 @@ function Main({ onOpenPopup }) {
     <StyledMain>
       <StyledContainer>
         <MainBlock>
-          {isLoading ? (
+          {tasksLoading ? (
             <Loading />
           ) : (
             <MainContent>
@@ -83,7 +62,7 @@ function Main({ onOpenPopup }) {
                 <Column 
                   key={index} 
                   title={status}
-                  cards={getTasksByStatus(status)}
+                  cards={getTasksByStatus(status)} // Используем getTasksByStatus вместо прямого доступа к tasks
                   onCardClick={handleCardClick}
                 />
               ))}
