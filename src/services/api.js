@@ -12,7 +12,7 @@ async function makeRequest(url, options = {}) {
         const errorData = await response.json();
         errorMessage = errorData.error || errorMessage;
       } catch {
-        // Не удалось распарсить JSON с ошибкой, используем сообщение по умолчанию
+        // Не удалось распарсить JSON с ошибкой
       }
       throw new Error(errorMessage);
     }
@@ -29,18 +29,26 @@ function getToken() {
   return localStorage.getItem('token');
 }
 
-// Создание заголовков с авторизацией
-function getHeaders() {
+// Функция для запросов с авторизацией (задачи)
+function makeApiRequest(url, options = {}) {
   const token = getToken();
   const headers = {
-    'Content-Type': 'application/json',
+    ...options.headers,
   };
   
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
   }
   
-  return headers;
+  return makeRequest(url, {
+    ...options,
+    headers,
+  });
 }
 
-export { API_BASE_URL, makeRequest, getToken, getHeaders };
+export { 
+  API_BASE_URL, 
+  makeRequest, 
+  makeApiRequest,
+  getToken 
+};

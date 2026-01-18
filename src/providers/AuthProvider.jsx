@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import AuthContext from '../context/auth-context';
 import { loginUser, registerUser, getCurrentUser } from '../services/auth-api';
 
@@ -21,6 +21,10 @@ export default function AuthProvider({ children }) {
       setIsLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth])
 
   // Вход
   const login = useCallback(async ({ login, password }) => {
