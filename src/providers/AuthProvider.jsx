@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import AuthContext from './auth-context';
-import { loginUser, registerUser, getCurrentUser } from './services/auth-api';
+import AuthContext from '../context/auth-context';
+import { loginUser, registerUser, getCurrentUser } from '../services/auth-api';
 
 export default function AuthProvider({ children }) {
   const [isAuth, setIsAuth] = useState(false);

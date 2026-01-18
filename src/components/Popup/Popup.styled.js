@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme } from '../../theme';
+import { theme } from '../../theme/theme';
 
 export const PopupOverlay = styled.div`
   display: ${props => props.$isOpen ? 'flex' : 'none'};

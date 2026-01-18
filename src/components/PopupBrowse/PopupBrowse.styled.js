@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { PopupOverlay, PopupBlock } from '../Popup/Popup.styled';
-import { theme } from '../../theme';
+import { theme } from '../../theme/theme';
 
 export const PopupBrowseOverlay = styled(PopupOverlay).attrs({ $zIndex: 7 })`
   @media screen and (max-width: ${theme.breakpoints.laptop}) {

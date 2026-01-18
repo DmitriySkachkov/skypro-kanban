@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../useAuth';
-import { useTasks } from '../../useTasks';
-import { StyledContainer } from '../../Container.styled';
+import { useAuth } from '../../hooks/useAuth';
+import { useTasks } from '../../hooks/useTasks';
+import { StyledContainer } from '../../theme/Container.styled';
 import Column from '../Column/Column';
 import Loading from '../Loading/Loading';
 import { statuses } from '../../data';

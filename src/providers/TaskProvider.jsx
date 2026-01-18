@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useAuth } from './useAuth';
-import { getTasks, createTask, updateTask, deleteTask } from './services/tasks-api';
-import TaskContext from './task-context';
+import { useAuth } from '../hooks/useAuth';
+import { getTasks, createTask, updateTask, deleteTask } from '../services/tasks-api';
+import TaskContext from '../context/task-context';
 
 export default function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([]);

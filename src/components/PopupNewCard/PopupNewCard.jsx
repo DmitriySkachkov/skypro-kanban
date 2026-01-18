@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useTasks } from '../../useTasks';
+import { useTasks } from '../../hooks/useTasks';
 import {
   PopupNewCardOverlay,
   PopupNewCardBlock,
