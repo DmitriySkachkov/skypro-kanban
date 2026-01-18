@@ -159,6 +159,58 @@ export const Subtitle = styled.p`
   line-height: 1;
 `;
 
+export const ErrorMessage = styled.div`
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  background-color: #ffeaea;
+  color: #d32f2f;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+`;
+
+export const Status = styled.div`
+  margin-bottom: 20px;
+`;
+
+export const StatusText = styled.p`
+  margin-bottom: 14px;
+`;
+
+export const StatusThemes = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+`;
+
+export const StatusTheme = styled.div`
+  border-radius: 24px;
+  border: 0.7px solid ${theme.colors.borderLight};
+  color: ${theme.colors.textSecondary};
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  ${props => props.$active && `
+    background-color: ${theme.colors.primary};
+    color: ${theme.colors.white};
+    border-color: ${theme.colors.primary};
+  `}
+
+  &:hover {
+    background-color: ${theme.colors.primary}20;
+  }
+
+  & div {
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: -0.14px;
+  }
+`;
+
 export const Calendar = styled.div`
   width: 182px;
   margin-bottom: 20px;
@@ -326,6 +378,7 @@ export const CategoriesThemes = styled.div`
   flex-wrap: nowrap;
   align-items: flex-start;
   justify-content: flex-start;
+  gap: 8px;
 `;
 
 export const CategoriesText = styled.p`
@@ -338,7 +391,6 @@ export const CategoriesTheme = styled.div`
   height: 30px;
   padding: 8px 20px;
   border-radius: 24px;
-  margin-right: 7px;
   opacity: ${props => props.$active ? '1' : '0.4'};
   background-color: ${props => {
     switch (props.$color) {
@@ -356,6 +408,12 @@ export const CategoriesTheme = styled.div`
       default: return theme.colors.orange.text;
     }
   }};
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
 
   & div {
     font-size: 14px;
