@@ -127,6 +127,18 @@ export const Subtitle = styled.p`
   line-height: 1;
 `;
 
+// ДОБАВЛЯЕМ ErrorMessage
+export const ErrorMessage = styled.div`
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  background-color: #ffeaea;
+  color: #d32f2f;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+`;
+
 export const Calendar = styled.div`
   max-width: 182px;
   margin-bottom: 20px;
