@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useAuth } from './useAuth';
-import { getTasks, createTask, updateTask, deleteTask } from './services/tasks-api';
-import TaskContext from './task-context';
+import { useAuth } from '../hooks/useAuth';
+import { getTasks, createTask, updateTask, deleteTask } from '../services/tasks-api';
+import TaskContext from '../context/task-context';
 
 export default function TaskProvider({ children }) {
   const [tasks, setTasks] = useState([]);
@@ -22,7 +22,6 @@ export default function TaskProvider({ children }) {
       const data = await getTasks();
       setTasks(data.tasks || []);
     } catch (err) {
-      console.error('Failed to load tasks:', err);
       setError(err.message || 'Не удалось загрузить задачи');
       setTasks([]);
     } finally {
@@ -36,7 +35,7 @@ export default function TaskProvider({ children }) {
       setError(null);
       const data = await createTask(taskData);
       setTasks(data.tasks || []);
-      return { success: true, data };
+      return { success: true };
     } catch (err) {
       const errorMsg = err.message || 'Не удалось создать задачу';
       setError(errorMsg);
@@ -52,7 +51,7 @@ export default function TaskProvider({ children }) {
       setError(null);
       const data = await updateTask(id, taskData);
       setTasks(data.tasks || []);
-      return { success: true, data };
+      return { success: true };
     } catch (err) {
       const errorMsg = err.message || 'Не удалось обновить задачу';
       setError(errorMsg);
@@ -68,7 +67,7 @@ export default function TaskProvider({ children }) {
       setError(null);
       const data = await deleteTask(id);
       setTasks(data.tasks || []);
-      return { success: true, data };
+      return { success: true };
     } catch (err) {
       const errorMsg = err.message || 'Не удалось удалить задачу';
       setError(errorMsg);
@@ -83,7 +82,7 @@ export default function TaskProvider({ children }) {
   }, [tasks]);
 
   const getTaskById = useCallback((id) => {
-    return tasks.find(task => task._id === id);
+    return tasks.find(task => task._id === id || task.id === id);
   }, [tasks]);
 
   useEffect(() => {

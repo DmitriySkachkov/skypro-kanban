@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme } from '../../theme';
+import { theme } from '../../theme/theme';
 
 export const StyledHeader = styled.header`
   width: 100%;

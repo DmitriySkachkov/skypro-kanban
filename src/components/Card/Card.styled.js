@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme } from '../../theme';
+import { theme } from '../../theme/theme';
 
 export const CardItem = styled.div`
   padding: 5px;
@@ -57,7 +57,6 @@ export const CardTheme = styled.div`
     }
   }};
   
-  /* Центрирование текста */
   display: flex;
   align-items: center;
   justify-content: center;

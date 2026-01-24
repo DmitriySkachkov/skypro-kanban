@@ -1,11 +1,10 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../useAuth';
-import { useTasks } from '../../useTasks';
-import { StyledContainer } from '../../Container.styled';
+import { useAuth } from '../../hooks/useAuth';
+import { useTasks } from '../../hooks/useTasks';
+import { StyledContainer } from '../../theme/Container.styled';
 import Column from '../Column/Column';
 import Loading from '../Loading/Loading';
-import { statuses } from '../../data';
 import { StyledMain, MainBlock, MainContent, ErrorBlock } from './Main.styled';
 
 function Main({ onOpenPopup }) {
@@ -14,7 +13,8 @@ function Main({ onOpenPopup }) {
     isLoading: tasksLoading, 
     error, 
     getTasksByStatus,
-    loadTasks 
+    loadTasks,
+    tasks 
   } = useTasks();
   
   const navigate = useNavigate();
@@ -50,6 +50,12 @@ function Main({ onOpenPopup }) {
     );
   }
 
+  // Динамически получаем статусы из задач
+  const getUniqueStatuses = () => {
+    if (!tasks.length) return ['Без статуса'];
+    return ['Без статуса', 'Нужно сделать', 'В работе', 'Тестирование', 'Готово'];
+  };
+
   return (
     <StyledMain>
       <StyledContainer>
@@ -58,11 +64,11 @@ function Main({ onOpenPopup }) {
             <Loading />
           ) : (
             <MainContent>
-              {statuses.map((status, index) => (
+              {getUniqueStatuses().map((status, index) => (
                 <Column 
                   key={index} 
                   title={status}
-                  cards={getTasksByStatus(status)} // Используем getTasksByStatus вместо прямого доступа к tasks
+                  cards={getTasksByStatus(status)}
                   onCardClick={handleCardClick}
                 />
               ))}
