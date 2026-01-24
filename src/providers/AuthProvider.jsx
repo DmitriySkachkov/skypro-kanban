@@ -7,7 +7,6 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Проверка авторизации при загрузке
   const checkAuth = useCallback(async () => {
     try {
       const userData = await getCurrentUser();
@@ -15,8 +14,8 @@ export default function AuthProvider({ children }) {
         setIsAuth(true);
         setUser(userData);
       }
-    } catch (error) {
-      console.error('Auth check failed:', error);
+    } catch {
+      // Ошибка при проверке авторизации - пользователь не авторизован
     } finally {
       setIsLoading(false);
     }
@@ -24,17 +23,16 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     checkAuth();
-  }, [checkAuth])
+  }, [checkAuth]);
 
-  // Вход
   const login = useCallback(async ({ login, password }) => {
     try {
       setIsLoading(true);
       const response = await loginUser({ login, password });
       
       setIsAuth(true);
-      setUser(response.user);
-      return { success: true, data: response };
+      setUser(response.user || response);
+      return { success: true };
     } catch (error) {
       return { 
         success: false, 
@@ -45,7 +43,6 @@ export default function AuthProvider({ children }) {
     }
   }, []);
 
-  // Регистрация
   const register = useCallback(async ({ login, password, name }) => {
     try {
       setIsLoading(true);
@@ -61,7 +58,6 @@ export default function AuthProvider({ children }) {
     }
   }, []);
 
-  // Выход
   const logout = useCallback(() => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');

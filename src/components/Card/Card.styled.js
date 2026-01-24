@@ -57,7 +57,6 @@ export const CardTheme = styled.div`
     }
   }};
   
-  /* Центрирование текста */
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,7 +1,5 @@
-// Базовый URL API
 const API_BASE_URL = 'https://wedev-api.sky.pro/api';
 
-// Базовый запрос с обработкой ошибок
 async function makeRequest(url, options = {}) {
   try {
     const response = await fetch(url, options);
@@ -10,9 +8,9 @@ async function makeRequest(url, options = {}) {
       let errorMessage = `HTTP error ${response.status}`;
       try {
         const errorData = await response.json();
-        errorMessage = errorData.error || errorMessage;
+        errorMessage = errorData.error || errorData.message || errorMessage;
       } catch {
-        // Не удалось распарсить JSON с ошибкой
+        // Не удалось распарсить JSON
       }
       throw new Error(errorMessage);
     }
@@ -24,14 +22,13 @@ async function makeRequest(url, options = {}) {
   }
 }
 
-// Получение токена из localStorage
 function getToken() {
   return localStorage.getItem('token');
 }
 
-// Функция для запросов с авторизацией (задачи)
 function makeApiRequest(url, options = {}) {
   const token = getToken();
+  
   const headers = {
     ...options.headers,
   };

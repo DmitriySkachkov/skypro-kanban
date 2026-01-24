@@ -120,12 +120,9 @@ function PopupNewCard({ isOpen, onClose }) {
   };
 
   const formatDate = (date) => {
-    if (!date) return '';
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear().toString().slice(2);
-    return `${day}.${month}.${year}`;
-  };
+  if (!date) return new Date().toISOString();
+  return date.toISOString();
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -135,6 +132,8 @@ function PopupNewCard({ isOpen, onClose }) {
       setError('Введите название задачи');
       return;
     }
+
+    
 
     const taskData = {
       title: title.trim(),
@@ -270,7 +269,7 @@ function PopupNewCard({ isOpen, onClose }) {
                 
                 <CalendarText>
                   {selectedDate 
-                    ? `Выбрана дата: ${formatDate(selectedDate)}`
+                    ? `Выбрана дата: ${selectedDate.toLocaleDateString('ru-RU')}`
                     : 'Выберите срок исполнения.'}
                 </CalendarText>
               </CalendarBlock>
@@ -323,6 +322,7 @@ function PopupNewCard({ isOpen, onClose }) {
       </PopupNewCardBlock>
     </PopupNewCardOverlay>
   );
+  
 }
 
 export default PopupNewCard;

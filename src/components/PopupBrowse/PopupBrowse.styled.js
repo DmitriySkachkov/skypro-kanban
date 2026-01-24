@@ -120,14 +120,13 @@ export const FormBrowseArea = styled.textarea`
   }
 `;
 
-export const Subtitle = styled.p`
+export const Subtitle = styled.div`
   color: ${theme.colors.textPrimary};
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
 `;
 
-// ДОБАВЛЯЕМ ErrorMessage
 export const ErrorMessage = styled.div`
   width: 100%;
   padding: 10px 14px;
@@ -152,7 +151,7 @@ export const CalendarTitle = styled.div`
   margin-bottom: 14px;
 `;
 
-export const CalendarText = styled.p`
+export const CalendarText = styled.div`
   color: ${theme.colors.textPrimary};
   font-size: 10px;
   line-height: 1;
@@ -269,7 +268,7 @@ export const Categories = styled.div`
   margin-bottom: 11px;
 `;
 
-export const CategoriesText = styled.p`
+export const CategoriesText = styled.div`
   margin-bottom: 14px;
 `;
 
@@ -308,7 +307,7 @@ export const Status = styled.div`
   margin-bottom: 11px;
 `;
 
-export const StatusText = styled.p`
+export const StatusText = styled.div`
   margin-bottom: 14px;
 `;
 

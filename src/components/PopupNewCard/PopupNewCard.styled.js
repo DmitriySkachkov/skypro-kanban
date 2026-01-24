@@ -152,7 +152,7 @@ export const FormNewCreate = styled.button`
   }
 `;
 
-export const Subtitle = styled.p`
+export const Subtitle = styled.div`
   color: ${theme.colors.textPrimary};
   font-size: 14px;
   font-weight: 600;
@@ -174,7 +174,7 @@ export const Status = styled.div`
   margin-bottom: 20px;
 `;
 
-export const StatusText = styled.p`
+export const StatusText = styled.div`
   margin-bottom: 14px;
 `;
 
@@ -225,12 +225,12 @@ export const Calendar = styled.div`
   }
 `;
 
-export const CalendarTitle = styled.p`
+export const CalendarTitle = styled.div`
   margin-bottom: 14px;
   padding: 0 7px;
 `;
 
-export const CalendarText = styled.p`
+export const CalendarText = styled.div`
   color: ${theme.colors.textSecondary};
   font-size: 10px;
   line-height: 1;
@@ -381,7 +381,7 @@ export const CategoriesThemes = styled.div`
   gap: 8px;
 `;
 
-export const CategoriesText = styled.p`
+export const CategoriesText = styled.div`
   margin-bottom: 14px;
 `;
 
