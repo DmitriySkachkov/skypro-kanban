@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme } from '../../theme';
+import { theme } from '../../theme/theme';
 
 export const PopupOverlay = styled.div`
   display: ${props => props.$isOpen ? 'flex' : 'none'};
@@ -115,7 +115,7 @@ export const PopupButton = styled.button`
 `;
 
 // Дополнительные компоненты для календаря и категорий
-export const Subtitle = styled.p`
+export const Subtitle = styled.div`
   color: ${theme.colors.textPrimary};
   font-size: 14px;
   font-weight: 600;
@@ -126,7 +126,7 @@ export const Calendar = styled.div`
   max-width: 182px;
   margin-bottom: 20px;
 
-  @media screen and (max-width: ${theme.breakpoints.laptop}) {
+  @media screen and (max-width: ${theme.breakpoints.desktop}) {
     max-width: 100%;
   }
 `;
@@ -135,7 +135,7 @@ export const CalendarTitle = styled.div`
   margin-bottom: 14px;
 `;
 
-export const CalendarText = styled.p`
+export const CalendarText = styled.div`
   color: ${theme.colors.textPrimary};
   font-size: 10px;
   line-height: 1;
@@ -252,7 +252,7 @@ export const Categories = styled.div`
   margin-bottom: 11px;
 `;
 
-export const CategoriesText = styled.p`
+export const CategoriesText = styled.div`
   margin-bottom: 14px;
 `;
 
@@ -291,7 +291,7 @@ export const Status = styled.div`
   margin-bottom: 11px;
 `;
 
-export const StatusText = styled.p`
+export const StatusText = styled.div`
   margin-bottom: 14px;
 `;
 

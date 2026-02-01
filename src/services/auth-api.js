@@ -1,4 +1,4 @@
-import { API_BASE_URL, makeRequest, getToken } from './api';
+import { API_BASE_URL, makeRequest } from './api';
 
 export async function registerUser({ login, password, name }) {
   const response = await makeRequest(`${API_BASE_URL}/user`, {
@@ -15,8 +15,8 @@ export async function loginUser({ login, password }) {
     body: JSON.stringify({ login, password }),
   });
   
-  if (response.token) {
-    localStorage.setItem('token', response.token);
+  if (response.user?.token) {
+    localStorage.setItem('token', response.user.token);
     localStorage.setItem('user', JSON.stringify(response.user));
   }
   
@@ -24,10 +24,8 @@ export async function loginUser({ login, password }) {
 }
 
 export async function getCurrentUser() {
-  const token = getToken();
-  if (!token) {
-    return null;
-  }
+  const token = localStorage.getItem('token');
+  if (!token) return null;
   
   try {
     const response = await makeRequest(`${API_BASE_URL}/user`, {
@@ -35,7 +33,7 @@ export async function getCurrentUser() {
         'Authorization': `Bearer ${token}`,
       },
     });
-    return response.user;
+    return response.user || response;
   } catch {
     localStorage.removeItem('token');
     localStorage.removeItem('user');

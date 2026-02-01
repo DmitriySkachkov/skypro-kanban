@@ -1,8 +1,7 @@
-import { GlobalStyles } from './GlobalStyles.styled';
-import { StyledWrapper } from './Wrapper.styled';
+import { GlobalStyles, StyledWrapper } from './theme';
 import AppRoutes from './AppRoutes';
-import AuthProvider from './AuthProvider';
-import TaskProvider from './TaskProvider';
+import AuthProvider from './providers/AuthProvider'; 
+import TaskProvider from './providers/TaskProvider';
 
 function App() {
   return (

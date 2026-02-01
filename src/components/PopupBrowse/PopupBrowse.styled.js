@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { PopupOverlay, PopupBlock } from '../Popup/Popup.styled';
-import { theme } from '../../theme';
+import { theme } from '../../theme/theme';
 
 export const PopupBrowseOverlay = styled(PopupOverlay).attrs({ $zIndex: 7 })`
   @media screen and (max-width: ${theme.breakpoints.laptop}) {
@@ -120,11 +120,22 @@ export const FormBrowseArea = styled.textarea`
   }
 `;
 
-export const Subtitle = styled.p`
+export const Subtitle = styled.div`
   color: ${theme.colors.textPrimary};
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
+`;
+
+export const ErrorMessage = styled.div`
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  background-color: #ffeaea;
+  color: #d32f2f;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
 `;
 
 export const Calendar = styled.div`
@@ -140,7 +151,7 @@ export const CalendarTitle = styled.div`
   margin-bottom: 14px;
 `;
 
-export const CalendarText = styled.p`
+export const CalendarText = styled.div`
   color: ${theme.colors.textPrimary};
   font-size: 10px;
   line-height: 1;
@@ -257,7 +268,7 @@ export const Categories = styled.div`
   margin-bottom: 11px;
 `;
 
-export const CategoriesText = styled.p`
+export const CategoriesText = styled.div`
   margin-bottom: 14px;
 `;
 
@@ -296,7 +307,7 @@ export const Status = styled.div`
   margin-bottom: 11px;
 `;
 
-export const StatusText = styled.p`
+export const StatusText = styled.div`
   margin-bottom: 14px;
 `;
 

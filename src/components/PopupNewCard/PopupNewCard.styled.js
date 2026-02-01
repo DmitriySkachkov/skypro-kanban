@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { PopupOverlay, PopupBlock } from '../Popup/Popup.styled';
-import { theme } from '../../theme';
+import { theme } from '../../theme/theme';
 
 export const PopupNewCardOverlay = styled(PopupOverlay).attrs({ $zIndex: 6 })`
   @media screen and (max-width: ${theme.breakpoints.laptop}) {
@@ -152,11 +152,63 @@ export const FormNewCreate = styled.button`
   }
 `;
 
-export const Subtitle = styled.p`
+export const Subtitle = styled.div`
   color: ${theme.colors.textPrimary};
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
+`;
+
+export const ErrorMessage = styled.div`
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  background-color: #ffeaea;
+  color: #d32f2f;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+`;
+
+export const Status = styled.div`
+  margin-bottom: 20px;
+`;
+
+export const StatusText = styled.div`
+  margin-bottom: 14px;
+`;
+
+export const StatusThemes = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+`;
+
+export const StatusTheme = styled.div`
+  border-radius: 24px;
+  border: 0.7px solid ${theme.colors.borderLight};
+  color: ${theme.colors.textSecondary};
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  ${props => props.$active && `
+    background-color: ${theme.colors.primary};
+    color: ${theme.colors.white};
+    border-color: ${theme.colors.primary};
+  `}
+
+  &:hover {
+    background-color: ${theme.colors.primary}20;
+  }
+
+  & div {
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: -0.14px;
+  }
 `;
 
 export const Calendar = styled.div`
@@ -173,12 +225,12 @@ export const Calendar = styled.div`
   }
 `;
 
-export const CalendarTitle = styled.p`
+export const CalendarTitle = styled.div`
   margin-bottom: 14px;
   padding: 0 7px;
 `;
 
-export const CalendarText = styled.p`
+export const CalendarText = styled.div`
   color: ${theme.colors.textSecondary};
   font-size: 10px;
   line-height: 1;
@@ -326,9 +378,10 @@ export const CategoriesThemes = styled.div`
   flex-wrap: nowrap;
   align-items: flex-start;
   justify-content: flex-start;
+  gap: 8px;
 `;
 
-export const CategoriesText = styled.p`
+export const CategoriesText = styled.div`
   margin-bottom: 14px;
 `;
 
@@ -338,7 +391,6 @@ export const CategoriesTheme = styled.div`
   height: 30px;
   padding: 8px 20px;
   border-radius: 24px;
-  margin-right: 7px;
   opacity: ${props => props.$active ? '1' : '0.4'};
   background-color: ${props => {
     switch (props.$color) {
@@ -356,6 +408,12 @@ export const CategoriesTheme = styled.div`
       default: return theme.colors.orange.text;
     }
   }};
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
 
   & div {
     font-size: 14px;

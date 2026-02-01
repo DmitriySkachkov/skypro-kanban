@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../useAuth';
+import { useAuth } from '../hooks/useAuth';
 import {
   LoginPageContainer,
   LoginForm,
@@ -21,27 +21,12 @@ function LoginPage() {
   const { login: authLogin } = useAuth();
   const navigate = useNavigate();
 
-  const validateForm = () => {
-    if (!login.trim()) {
-      setError('Введите логин');
-      return false;
-    }
-    if (!password.trim()) {
-      setError('Введите пароль');
-      return false;
-    }
-    if (password.length < 3) {
-      setError('Пароль должен содержать минимум 3 символа');
-      return false;
-    }
-    return true;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     
-    if (!validateForm()) {
+    if (!login.trim() || !password.trim()) {
+      setError('Заполните все поля');
       return;
     }
 
