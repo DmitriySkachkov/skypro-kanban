@@ -1,18 +1,17 @@
-import { GlobalStyles, StyledWrapper } from './theme';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { TaskProvider } from './context/TaskContext';
 import AppRoutes from './AppRoutes';
-import AuthProvider from './providers/AuthProvider'; 
-import TaskProvider from './providers/TaskProvider';
 
 function App() {
   return (
-    <AuthProvider>
-      <TaskProvider>
-        <GlobalStyles />
-        <StyledWrapper className="wrapper">
+    <Router>
+      <AuthProvider>
+        <TaskProvider>
           <AppRoutes />
-        </StyledWrapper>
-      </TaskProvider>
-    </AuthProvider>
+        </TaskProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 

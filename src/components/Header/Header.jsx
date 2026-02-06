@@ -1,96 +1,139 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
-import { StyledContainer } from '../../theme/Container.styled';
+import { useState, useRef, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import {
-  StyledHeader,
+  HeaderContainer,
   HeaderBlock,
   HeaderLogo,
   HeaderNav,
-  HeaderButton,
-  HeaderUser,
-  PopUserSet,
-  PopUserName,
-  PopUserMail,
-  PopUserTheme,
+  UserContainer,
+  NewTaskButton,
+  UserButton,
+  UserMenu,
+  UserName,
+  UserEmail,
+  ThemeToggle,
   ThemeCheckbox,
-  PopUserButton
+  LogoutButton,
+  LoadingDots,
+  UserSkeleton
 } from './Header.styled';
 
-function Header({ onOpenPopup }) {
+const Header = ({ isDarkTheme, toggleTheme, onNewCardClick, isLoading }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const { isAuth, user } = useAuth(); 
+  const menuRef = useRef(null);
+  const userButtonRef = useRef(null);
+  const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
-  const handleLoginClick = () => {
-    navigate('/login');
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target) && 
+          userButtonRef.current && !userButtonRef.current.contains(event.target)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const toggleUserMenu = () => {
+    if (!isLoading) {
+      setIsUserMenuOpen(!isUserMenuOpen);
+    }
   };
 
-  const handleLogoutClick = () => {
-    onOpenPopup('exit');
+  const handleNewCardClick = (e) => {
+    e.preventDefault();
+    if (!isLoading) {
+      navigate('/new-card');
+    }
+  };
+
+  const handleLogoutClick = (e) => {
+    e.preventDefault();
+    navigate('/exit');
     setIsUserMenuOpen(false);
   };
 
-  if (!isAuth) {
-    return (
-      <StyledHeader>
-        <StyledContainer>
-          <HeaderBlock>
-            <HeaderLogo>
-              <a href="#" target="_self">
-                <img src="/logo.png" alt="logo" />
-              </a>
-            </HeaderLogo>
-            <HeaderNav>
-              <HeaderButton className="_hover01" onClick={handleLoginClick}>
-                Войти
-              </HeaderButton>
-            </HeaderNav>
-          </HeaderBlock>
-        </StyledContainer>
-      </StyledHeader>
-    );
-  }
+  const handleThemeToggle = () => {
+    toggleTheme();
+  };
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    navigate('/');
+  };
 
   return (
-    <StyledHeader>
-      <StyledContainer>
-        <HeaderBlock>
-          <HeaderLogo>
-            <a href="#" target="_self">
-              <img src="/logo.png" alt="logo" />
-            </a>
-          </HeaderLogo>
-          <HeaderNav>
-            <HeaderButton className="_hover01" onClick={() => onOpenPopup('newCard')}>
-              Создать новую задачу
-            </HeaderButton>
-            <HeaderUser 
-              className="_hover02"
-              onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-            >
-              {user?.name || 'Пользователь'}
-            </HeaderUser>
-            <PopUserSet $isOpen={isUserMenuOpen}>
-              <PopUserName>{user?.name || 'Пользователь'}</PopUserName>
-              <PopUserMail>{user?.login || 'user@example.com'}</PopUserMail>
-              <PopUserTheme>
-                <div>Темная тема</div>
-                <ThemeCheckbox className="checkbox" name="checkbox" />
-              </PopUserTheme>
-              <PopUserButton 
-                type="button" 
-                className="_hover03" 
-                onClick={handleLogoutClick}
+    <HeaderContainer>
+      <HeaderBlock>
+        <HeaderLogo>
+          <Link to="/" onClick={handleLogoClick}>
+            <img 
+              src={isDarkTheme ? "/images/logo_dark.png" : "/images/logo.png"} 
+              alt="logo" 
+            />
+          </Link>
+        </HeaderLogo>
+        <HeaderNav>
+          <NewTaskButton 
+            onClick={handleNewCardClick}
+            $loading={isLoading}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <LoadingDots>
+                <span></span>
+                <span></span>
+                <span></span>
+              </LoadingDots>
+            ) : (
+              "Создать новую задачу"
+            )}
+          </NewTaskButton>
+          <UserContainer>
+            {isLoading ? (
+              <UserSkeleton />
+            ) : (
+              <UserButton 
+                ref={userButtonRef}
+                href="#user-set-target"
+                onClick={(e) => {
+                  e.preventDefault();
+                  toggleUserMenu();
+                }}
               >
+                {currentUser?.name || 'User'}
+              </UserButton>
+            )}
+            <UserMenu 
+              ref={menuRef}
+              $isOpen={isUserMenuOpen}
+              id="user-set-target"
+            >
+              <UserName>{currentUser?.name || 'User'}</UserName>
+              <UserEmail>{currentUser?.email || 'user@example.com'}</UserEmail>
+              <ThemeToggle>
+                <p>Темная тема</p>
+                <ThemeCheckbox 
+                  type="checkbox" 
+                  checked={isDarkTheme}
+                  onChange={handleThemeToggle}
+                />
+              </ThemeToggle>
+              <LogoutButton type="button" onClick={handleLogoutClick}>
                 Выйти
-              </PopUserButton>
-            </PopUserSet>
-          </HeaderNav>					
-        </HeaderBlock>
-      </StyledContainer>
-    </StyledHeader>
+              </LogoutButton>
+            </UserMenu>
+          </UserContainer>
+        </HeaderNav>					
+      </HeaderBlock>			
+    </HeaderContainer>
   );
-}
+};
 
 export default Header;

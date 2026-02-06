@@ -1,56 +1,38 @@
 import styled from 'styled-components';
-import { theme } from '../../theme/theme';
 
-export const StyledMain = styled.main`
+export const MainContainer = styled.main`
   width: 100%;
-  background-color: ${theme.colors.mainBg};
+  background-color: ${props => props.theme.bgPrimary};
+  display: flex;
+  justify-content: center;
   flex: 1;
-  padding: 40px 0;
 `;
 
 export const MainBlock = styled.div`
   width: 100%;
-  margin: 0 auto;
+  max-width: 1440px;
+  padding: 40px 135px 49px 135px;
+  box-sizing: border-box;
+  background-color: ${props => props.theme.bgPrimary}; 
+
+  @media (max-width: 1200px) {
+    padding: 40px 20px 64px;
+  }
 `;
 
 export const MainContent = styled.div`
   width: 100%;
   display: flex;
-  gap: 26px;
-  align-items: flex-start;
+  gap: 19px;
+  justify-content: flex-start;
 
-  @media screen and (max-width: ${theme.breakpoints.desktop}) {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-    padding-bottom: 20px;
+  @media (max-width: 1200px) {
+    gap: 15px;
+    justify-content: center;
   }
-`;
 
-export const ErrorBlock = styled.div`
-  text-align: center;
-  padding: 40px;
-  background-color: ${theme.colors.white};
-  border-radius: 10px;
-  box-shadow: ${theme.colors.shadow};
-  
-  p {
-    color: ${theme.colors.textPrimary};
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
-  
-  button {
-    padding: 10px 20px;
-    background-color: ${theme.colors.primary};
-    color: ${theme.colors.white};
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    
-    &:hover {
-      background-color: ${theme.colors.primaryHover};
-    }
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
   }
 `;

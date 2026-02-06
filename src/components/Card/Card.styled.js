@@ -1,29 +1,58 @@
-import styled from 'styled-components';
-import { theme } from '../../theme/theme';
+import styled, { keyframes } from 'styled-components';
 
-export const CardItem = styled.div`
-  padding: 5px;
-  animation-name: card-animation;
-  animation-duration: 500ms;
-  animation-timing-function: linear;
+const cardAnimation = keyframes`
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+  100% {
+    height: auto;
+    opacity: 1;
+  }
 `;
 
-export const CardContainer = styled.div`
+export const CardItem = styled.div.attrs(props => ({
+  dragging: props.$dragging ? 'true' : undefined,
+}))`
+  padding: 0;
+  animation-name: ${cardAnimation};
+  animation-duration: 500ms;
+  animation-timing-function: linear;
+  cursor: ${props => props.$dragging ? 'grabbing' : 'grab'};
+  position: relative;
+  opacity: ${props => props.$dragging ? 0.8 : 1};
+  transform: ${props => props.$dragging ? 'scale(0.95) rotate(2deg)' : 'scale(1) rotate(0)'};
+  transition: all 0.2s ease;
+  z-index: ${props => props.$dragging ? 10 : 1};
+  box-shadow: ${props => props.$dragging ? 
+    '0 8px 25px rgba(0, 0, 0, 0.15), 0 0 0 2px ' + props.theme.textSecondary : 
+    '0px 2px 10px rgba(0, 0, 0, 0.1)'};
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+`;
+
+export const CardContainer = styled.div.attrs(props => ({
+  dragging: props.$dragging ? 'true' : undefined,
+}))`
   width: 220px;
   height: 130px;
-  background-color: ${theme.colors.cardBg};
+  background-color: ${props => props.theme.cardBg};
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: stretch;
   padding: 15px 13px 19px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-  }
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 1px solid ${props => props.theme.borderColor};
 `;
 
 export const CardGroup = styled.div`
@@ -36,38 +65,27 @@ export const CardGroup = styled.div`
 `;
 
 export const CardTheme = styled.div`
-  width: auto;
-  height: 20px;
-  padding: 5px 14px;
-  border-radius: 18px;
+  border-radius: 24px;
+  padding: 6px 20px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 10px;
   background-color: ${props => {
-    switch (props.$theme) {
-      case 'orange': return theme.colors.orange.background;
-      case 'green': return theme.colors.green.background;
-      case 'purple': return theme.colors.purple.background;
-      default: return theme.colors.orange.background;
+    switch (props.$themeColor) {
+      case 'orange': return props.theme.orangeBg;
+      case 'green': return props.theme.greenBg;
+      case 'purple': return props.theme.purpleBg;
+      default: return props.theme.grayBg;
     }
   }};
   color: ${props => {
-    switch (props.$theme) {
-      case 'orange': return theme.colors.orange.text;
-      case 'green': return theme.colors.green.text;
-      case 'purple': return theme.colors.purple.text;
-      default: return theme.colors.orange.text;
+    switch (props.$themeColor) {
+      case 'orange': return props.theme.orangeColor;
+      case 'green': return props.theme.greenColor;
+      case 'purple': return props.theme.purpleColor;
+      default: return props.theme.grayColor;
     }
   }};
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  & p {
-    font-size: 10px;
-    font-weight: 600;
-    line-height: 10px;
-    margin: 0;
-    padding: 0;
-  }
 `;
 
 export const CardButton = styled.div`
@@ -77,13 +95,26 @@ export const CardButton = styled.div`
   align-items: center;
   justify-content: space-around;
   padding: 2px;
+  cursor: pointer;
+  flex-direction: column;
+  position: relative;
+  z-index: 10; 
+  pointer-events: auto !important;
+`;
 
-  & div {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background-color: ${theme.colors.textSecondary};
-  }
+export const CardDot = styled.div`
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: ${props => props.theme.textTertiary};
+`;
+
+export const CardTitle = styled.h3`
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  color: ${props => props.theme.textPrimary};
+  margin-bottom: 10px;
 `;
 
 export const CardContent = styled.div`
@@ -94,28 +125,24 @@ export const CardContent = styled.div`
   justify-content: space-between;
 `;
 
-export const CardTitle = styled.h3`
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 18px;
-  color: ${theme.colors.textPrimary};
-  margin-bottom: 10px;
-`;
-
 export const CardDate = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-
-  & svg {
+  
+  svg {
     width: 13px;
+    
+    path {
+      stroke: ${props => props.theme.textTertiary};
+    }
   }
-
-  & p {
+  
+  p {
     margin-left: 6px;
     font-size: 10px;
     line-height: 13px;
-    color: ${theme.colors.textSecondary};
+    color: ${props => props.theme.textTertiary};
     letter-spacing: 0.2px;
   }
 `;

@@ -1,12 +1,23 @@
-import styled from 'styled-components';
-import { theme } from '../../theme/theme';
+import styled, { keyframes } from 'styled-components';
 
-export const StyledHeader = styled.header`
+const dotsAnimation = keyframes`
+  0%, 80%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+`;
+
+const skeletonPulse = keyframes`
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+`;
+
+export const HeaderContainer = styled.header`
   width: 100%;
   margin: 0 auto;
-  background-color: ${theme.colors.headerBg};
-  padding: 0;
+  background-color: ${props => props.theme.headerBg};
+  padding: 0 16px;
+  box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.05);
   position: relative;
+  z-index: 10;
 `;
 
 export const HeaderBlock = styled.div`
@@ -15,44 +26,83 @@ export const HeaderBlock = styled.div`
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
-  position: relative;
-  top: 0;
-  left: 0;
   padding: 0;
+  max-width: 1440px;
+  margin: 0 auto;
 `;
 
 export const HeaderLogo = styled.div`
-  & img {
+  a {
+    display: block;
+  }
+  
+  img {
     width: 85px;
+    height: 20px;
+    display: block;
   }
 `;
 
 export const HeaderNav = styled.nav`
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 20px;
-  position: relative;
 `;
 
-export const HeaderButton = styled.button`
+export const NewTaskButton = styled.button`
   width: 178px;
   height: 30px;
   border-radius: 4px;
-  background-color: ${theme.colors.primary};
-  color: ${theme.colors.white};
+  background-color: ${props => props.theme.textSecondary};
+  color: #FFFFFF;
   border: none;
   font-size: 14px;
-  line-height: 1;
   font-weight: 500;
-  transition: background-color 0.2s ease;
+  line-height: 1;
+  cursor: ${props => props.$loading ? 'not-allowed' : 'pointer'};
+  opacity: ${props => props.$loading ? 0.7 : 1};
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 12px;
 
-  &:hover {
-    background-color: ${theme.colors.primaryHover};
+  &:hover:not(:disabled) {
+    background-color: #33399b;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 `;
 
-export const HeaderUser = styled.div`
+export const LoadingDots = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  span {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    animation: ${dotsAnimation} 1.4s ease-in-out infinite both;
+
+    &:nth-child(1) { animation-delay: -0.32s; }
+    &:nth-child(2) { animation-delay: -0.16s; }
+    &:nth-child(3) { animation-delay: 0s; }
+  }
+`;
+
+export const UserContainer = styled.div`
+  position: relative;
+`;
+
+export const UserButton = styled.a`
   height: 20px;
   display: flex;
   flex-wrap: nowrap;
@@ -60,53 +110,35 @@ export const HeaderUser = styled.div`
   justify-content: center;
   font-size: 14px;
   line-height: 20px;
-  color: ${theme.colors.primary};
-  transition: color 0.2s ease;
-  position: relative;
+  color: ${props => props.theme.textPrimary};
   cursor: pointer;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  white-space: nowrap;
 
   &:hover {
-    color: ${theme.colors.primaryHover};
-
-    &::after {
-      border-left-color: ${theme.colors.primaryHover};
-      border-bottom-color: ${theme.colors.primaryHover};
-    }
-  }
-
-  &::after {
-    content: "";
-    display: block;
-    width: 6px;
-    height: 6px;
-    border-radius: 1px;
-    border-left: 1.9px solid ${theme.colors.primary};
-    border-bottom: 1.9px solid ${theme.colors.primary};
-    transform: rotate(-45deg);
-    margin: -6px 0 0 5px;
-    padding: 0;
-    transition: border-color 0.2s ease;
+    color: ${props => props.theme.textSecondary};
   }
 `;
 
-export const PopUserSet = styled.div`
+export const UserMenu = styled.div`
   display: ${props => props.$isOpen ? 'block' : 'none'};
   position: absolute;
-  top: 61px;
+  top: 50px;
   right: 0;
-  width: 213px;
-  height: 205px;
+  background: ${props => props.theme.cardBg};
+  border: 0.7px solid ${props => props.theme.borderColor};
   border-radius: 10px;
-  border: 0.7px solid ${theme.colors.borderLight};
-  background: ${theme.colors.white};
-  box-shadow: ${theme.colors.shadow};
   padding: 34px;
+  box-shadow: 0px 10px 39px 0px rgba(26, 56, 101, 0.21);
+  min-width: 213px;
+  height: 205px;
+  z-index: 100;
   text-align: center;
-  z-index: 2;
 `;
 
-export const PopUserName = styled.p`
-  color: ${theme.colors.textPrimary};
+export const UserName = styled.p`
+  color: ${props => props.theme.textPrimary};
   font-size: 14px;
   font-weight: 500;
   line-height: 21px;
@@ -114,36 +146,37 @@ export const PopUserName = styled.p`
   margin-bottom: 4px;
 `;
 
-export const PopUserMail = styled.p`
-  color: ${theme.colors.textSecondary};
+export const UserEmail = styled.p`
+  color: ${props => props.theme.textTertiary};
   font-size: 14px;
   line-height: 21px;
   letter-spacing: -0.14px;
   margin-bottom: 10px;
 `;
 
-export const PopUserTheme = styled.div`
+export const ThemeToggle = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 30px;
 
-  & p {
-    color: ${theme.colors.textPrimary};
+  p {
+    color: ${props => props.theme.textPrimary};
     font-size: 14px;
     line-height: 21px;
     letter-spacing: -0.14px;
   }
 `;
 
-export const ThemeCheckbox = styled.input.attrs({ type: 'checkbox' })`
-  position: relative;
+export const ThemeCheckbox = styled.input`
   width: 24px;
   height: 13px;
   border-radius: 100px;
-  background: #EAEEF6;
-  outline: none;
+  background: ${props => props.theme.bgTertiary};
   appearance: none;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
 
   &::before {
     content: "";
@@ -153,26 +186,52 @@ export const ThemeCheckbox = styled.input.attrs({ type: 'checkbox' })`
     width: 11px;
     height: 11px;
     border-radius: 50%;
-    background-color: ${theme.colors.textSecondary};
-    transition: 0.5s;
+    background-color: ${props => props.theme.textTertiary};
+    transition: all 0.3s ease;
   }
 
-  &:checked::before {
-    left: 12px;
+  &:checked {
+    background: ${props => props.theme.textSecondary};
+    
+    &::before {
+      left: 12px;
+      background-color: #FFFFFF;
+    }
   }
 `;
 
-export const PopUserButton = styled.button`
-  width: 72px;
-  height: 30px;
+export const LogoutButton = styled.button`
+  width: 100%;
   background: transparent;
-  color: ${theme.colors.primary};
+  color: ${props => props.theme.textSecondary};
+  border: 1px solid ${props => props.theme.textSecondary};
   border-radius: 4px;
-  border: 1px solid ${theme.colors.primary};
-  transition: all 0.2s ease;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+
+  a {
+    color: ${props => props.theme.textSecondary};
+    text-decoration: none;
+    display: block;
+    width: 100%;
+  }
 
   &:hover {
-    background-color: ${theme.colors.primary};
-    color: ${theme.colors.white};
+    background-color: ${props => props.theme.textSecondary};
+    color: #FFFFFF;
+
+    a {
+      color: #FFFFFF;
+    }
   }
+`;
+
+export const UserSkeleton = styled.div`
+  width: 100px;
+  height: 20px;
+  background: ${props => props.theme.bgTertiary};
+  border-radius: 4px;
+  animation: ${skeletonPulse} 1.5s ease-in-out infinite;
 `;

@@ -1,65 +1,62 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from './hooks/useAuth';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import AddTaskPage from './pages/AddTaskPage';
-import EditTaskPage from './pages/EditTaskPage';
-import ViewTaskPage from './pages/ViewTaskPage';
-import NotFoundPage from './pages/NotFoundPage';
+import { useAuth } from './context/AuthContext';
+import Main from './pages/Main/Main';
+import Login from './pages/Login/login';
+import Register from './pages/Register/Register';
+import NotFound from './pages/NotFound/NotFound';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
-const ProtectedRoute = ({ children }) => {
-  const { isAuth } = useAuth(); 
-  return isAuth ? children : <Navigate to="/login" />;
-};
+const AppRoutes = () => {
+  const { isAuthenticated } = useAuth();
 
-const PublicRoute = ({ children }) => {
-  const { isAuth } = useAuth(); 
-  return !isAuth ? children : <Navigate to="/" />;
-};
-
-function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={
-        <ProtectedRoute>
-          <HomePage />
-        </ProtectedRoute>
-      } />
+      <Route 
+        path="/login" 
+        element={!isAuthenticated ? <Login /> : <Navigate to="/" replace />}
+      />
+      <Route 
+        path="/register" 
+        element={!isAuthenticated ? <Register /> : <Navigate to="/" replace />}
+      />
       
-      <Route path="/login" element={
-        <PublicRoute>
-          <LoginPage />
-        </PublicRoute>
-      } />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Main />
+          </ProtectedRoute>
+        }
+      />
       
-      <Route path="/register" element={
-        <PublicRoute>
-          <RegisterPage />
-        </PublicRoute>
-      } />
+      <Route
+        path="/new-card"
+        element={
+          <ProtectedRoute>
+            <Main />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/card/:id"
+        element={
+          <ProtectedRoute>
+            <Main />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/exit"
+        element={
+          <ProtectedRoute>
+            <Main />
+          </ProtectedRoute>
+        }
+      />
       
-      <Route path="/add-task" element={
-        <ProtectedRoute>
-          <AddTaskPage />
-        </ProtectedRoute>
-      } />
-      
-      <Route path="/edit-task/:id" element={
-        <ProtectedRoute>
-          <EditTaskPage />
-        </ProtectedRoute>
-      } />
-      
-      <Route path="/task/:id" element={
-        <ProtectedRoute>
-          <ViewTaskPage />
-        </ProtectedRoute>
-      } />
-      
-      <Route path="*" element={<NotFoundPage />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
-}
+};
 
 export default AppRoutes;
